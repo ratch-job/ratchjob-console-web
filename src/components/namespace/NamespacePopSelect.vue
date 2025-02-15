@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <div class="namespace_id" v-if="value.namespaceId != ''">
+    <div class="namespace_id" v-if="value.namespaceId != 'xxl'">
       <div class="namespace_text">
         <span>{{ value.namespaceId }}</span>
       </div>

@@ -52,7 +52,7 @@ export default defineConfig({
     port: 5175,
     proxy: {
       "/ratchjob/api": {
-        target: "http://127.0.0.1:10848",
+        target: "http://127.0.0.1:8825",
         changeOrigin: true,
       }
     }

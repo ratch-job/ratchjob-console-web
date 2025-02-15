@@ -49,8 +49,29 @@ const message = {
     confirm_delete_user_action: '确认要删服务名称为:<%:=username%> 的用户吗？'
   },
   menu: {
+    app_management: '应用管理',
+    app_list: '应用列表',
+    system_management: '系统管理',
     system_monitor: '系统监控',
     about: '关于'
+  },
+  namespace: {
+    namespace: '命名空间',
+    the_namespace_id_has_been_copied: '已复制命名空间id!',
+    namespaceName: '命名空间名称',
+    namespaceId: '命名空间Id',
+    new_namespace: '创建命名空间',
+    add_namespace: '新增命名空间',
+    edit_namespace: '修改命名空间',
+    retain_space: '保留空间',
+    confirm_delete_info: "确认要删除 '<%:=name%>'(ID: <%:=id%>) 命名空间吗？",
+    namespaceId_or: '命名空间ID,不填则自动生成'
+  },
+  app: {
+    code: '应用编码',
+    name: '应用名称',
+    inputCode: '输入应用编码',
+    searchCode: '查询应用编码(支持模糊查询)'
   },
   error: {
     NO_PERMISSION: '没有权限',

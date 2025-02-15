@@ -1,9 +1,6 @@
 import { routes } from './routes';
 
-import {
-  createRouter,
-  createWebHistory,
-} from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 
 const getRouteTitle = function (route) {
   return (route && route.meta && route.meta.title) || '';

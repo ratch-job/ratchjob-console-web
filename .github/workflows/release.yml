@@ -39,6 +39,7 @@ jobs:
         cd -
         rm -rf .git
         ls -al dist-wrap/src/dist/
+        cp -rf README.md dist-wrap/
         cd dist-wrap
         cargo publish
         cd -

@@ -21,10 +21,6 @@
     "fmt": "prettier --write src/"
   },
   "dependencies": {
-    "@codemirror/lang-html": "^6.4.8",
-    "@codemirror/lang-json": "^6.0.1",
-    "@codemirror/lang-xml": "^6.1.0",
-    "@codemirror/lang-yaml": "^6.0.0",
     "axios": "^1.7.8",
     "codemirror": "^6.0.1",
     "crypto-js": "^4.2.0",

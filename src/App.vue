@@ -3,6 +3,7 @@ import { useLayoutSize } from '@/data/appdata';
 import { zhCN, enUS } from 'naive-ui';
 import type { GlobalThemeOverrides } from 'naive-ui';
 import { langStore } from '@/data/lang';
+import { onMounted, onUnmounted } from 'vue';
 
 const themeOverrides: GlobalThemeOverrides = {
   common: {
@@ -34,9 +35,9 @@ const layoutSize = useLayoutSize();
 function updateLayoutSize() {
   layoutSize.updateLayoutSize(undefined);
 }
-//onMounted(updateLayoutSize);
-//onMounted(() => window.addEventListener('resize', updateLayoutSize));
-//onUnmounted(() => window.removeEventListener('resize', updateLayoutSize));
+onMounted(updateLayoutSize);
+onMounted(() => window.addEventListener('resize', updateLayoutSize));
+onUnmounted(() => window.removeEventListener('resize', updateLayoutSize));
 const locale = langStore.current.value == 'zh' ? zhCN : enUS;
 </script>
 

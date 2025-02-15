@@ -1,6 +1,7 @@
 import MainLayout from '@/components/layout/MainLayout.vue';
 import NotFound from '@/pages/NotFound.vue';
 import Tmp from '@/pages/Tmp.vue';
+import AppListPage from '@/pages/AppListPage.vue';
 import { ServerOutline, CubeOutline, AppsSharp } from '@vicons/ionicons5';
 import { getMessage as t } from '@/i18n';
 
@@ -24,11 +25,17 @@ export const routes = [
     component: MainLayout,
     children: [
       {
+        path: '/manage/app',
+        name: 'manage app',
+        meta: { title: t('menu.app_list') },
+        component: AppListPage
+      },
+      {
         path: '/manage/tmp',
-        name: 'manange tmp',
+        name: 'manage tmp',
         meta: { title: 'index' },
         component: Tmp
-      },
+      }
     ]
   }
 ];
@@ -50,6 +57,16 @@ function buildManageMenu(routes) {
 export const manageMenu = buildManageMenu(routes);
 
 export const sideAllMenu = [
+  {
+    name: t('menu.app_management'),
+    icon: markRaw(AppsSharp),
+    children: [
+      {
+        name: t('menu.app_list'),
+        path: '/manage/app'
+      }
+    ]
+  },
   {
     name: t('menu.system_management'),
     icon: markRaw(AppsSharp),

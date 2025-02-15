@@ -51,7 +51,6 @@ export interface IApiResult<T> {
   message: ?string;
 }
 
-
 export interface IPageResult<T> {
   totalCount: number;
   list: Array<T>;

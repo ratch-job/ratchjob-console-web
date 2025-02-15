@@ -5,7 +5,9 @@
         <n-space vertical class="inner_wrap">
           <n-card :title="this.$t('about.intro_title')" size="medium">
             <p>
-              <a href="https://github.com/ratch-job/ratch-job" target="_blank">ratch-job github</a>
+              <a href="https://github.com/ratch-job/ratch-job" target="_blank"
+                >ratch-job github</a
+              >
             </p>
           </n-card>
           <n-card :title="this.$t('about.version_title')" size="medium">
