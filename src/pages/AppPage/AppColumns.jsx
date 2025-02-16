@@ -1,5 +1,4 @@
 import { NButton, NPopconfirm } from 'naive-ui';
-import { toDatetime } from '@/utils/date';
 import { useI18n } from 'vue-i18n';
 import template from 'template_js';
 
@@ -36,34 +35,29 @@ export const createColumns = function ({
       render(row) {
         let editButton;
         let removePopconfirm;
-        if (webResources.canUpdateConfig) {
-          editButton = (
-            <NButton
-              size="tiny"
-              quaternary
-              type="info"
-              onClick={() => showUpdate(row)}
-            >
-              {t('common.edit')}
-            </NButton>
-          );
-          removePopconfirm = (
-            <NPopconfirm
-              onPositiveClick={() => remove(row)}
-              v-slots={removeConfirmSlots}
-            >
-              <span>
-                {template(t('config.confirm_delete_config_action'), {
-                  group: row.group,
-                  dataId: row.dataId
-                })}
-              </span>
-            </NPopconfirm>
-          );
-        } else {
-          editButton = <span></span>;
-          removePopconfirm = editButton;
-        }
+        editButton = (
+          <NButton
+            size="tiny"
+            quaternary
+            type="info"
+            onClick={() => showUpdate(row)}
+          >
+            {t('common.edit')}
+          </NButton>
+        );
+        removePopconfirm = (
+          <NPopconfirm
+            onPositiveClick={() => remove(row)}
+            v-slots={removeConfirmSlots}
+          >
+            <span>
+              {template(t('config.confirm_delete_config_action'), {
+                group: row.group,
+                dataId: row.dataId
+              })}
+            </span>
+          </NPopconfirm>
+        );
         return (
           <div>
             <NButton

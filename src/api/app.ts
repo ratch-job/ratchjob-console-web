@@ -22,8 +22,8 @@ interface IAppInfoParam {
   namespace?: string;
   app_name?: string;
   label?: string;
-  register_type?: string;
-  instance_addrs?: string[];
+  registerType?: string;
+  instanceAddrs?: string[];
 }
 
 class AppApi {
@@ -33,6 +33,18 @@ class AppApi {
     return axios.request({
       method: 'get',
       url: '/ratchjob/api/console/v1/app/list',
+      params: {
+        ...param
+      }
+    });
+  }
+
+  getAppInfo(
+    param: IAppPageParam
+  ): Promise<AxiosResponse<IApiResult<IAppInfo>>> {
+    return axios.request({
+      method: 'get',
+      url: '/ratchjob/api/console/v1/app/info',
       params: {
         ...param
       }

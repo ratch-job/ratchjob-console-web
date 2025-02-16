@@ -1,7 +1,7 @@
 import MainLayout from '@/components/layout/MainLayout.vue';
 import NotFound from '@/pages/NotFound.vue';
 import Tmp from '@/pages/Tmp.vue';
-import AppListPage from '@/pages/AppListPage.vue';
+import AppListPage from '@/pages/AppPage/AppListPage.vue';
 import { ServerOutline, CubeOutline, AppsSharp } from '@vicons/ionicons5';
 import { getMessage as t } from '@/i18n';
 
@@ -60,12 +60,15 @@ export const sideAllMenu = [
   {
     name: t('menu.app_management'),
     icon: markRaw(AppsSharp),
+    path: '/manage/app'
+    /*
     children: [
       {
         name: t('menu.app_list'),
         path: '/manage/app'
       }
     ]
+     */
   },
   {
     name: t('menu.system_management'),

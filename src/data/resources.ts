@@ -13,10 +13,14 @@ function sideMenu(resource: Set<string>, isOldConsole: boolean) {
         subItems.push(subItem);
       }
     }
-    if (subItems.length == 0) {
-      continue;
-    }
     let newItem = { ...item };
+    if (subItems.length == 0) {
+      if (item.path) {
+        newItem.active = true;
+      } else {
+        continue;
+      }
+    }
     newItem.children = subItems;
     items.push(newItem);
   }
@@ -30,8 +34,6 @@ export const useWebResources = defineStore('webResources', {
     fromRequest: false,
     username: '',
     version: 'x',
-    canUpdateConfig: true,
-    canUpdateService: true,
     canUpdateNamespace: true,
     sideMenu: sideMenu(new Set(), true)
   }),
@@ -42,8 +44,6 @@ export const useWebResources = defineStore('webResources', {
       this.resource = resource;
       this.isOldConsole = webResource.from === 'OLD_CONSOLE';
       this.fromRequest = true;
-      this.canUpdateConfig = this.resource.has('CONFIG_UPDATE');
-      this.canUpdateService = this.resource.has('SERVICE_UPDATE');
       this.canUpdateNamespace = this.resource.has('NAMESPACE_UPDATE');
       this.version = 'v' + webResource.version;
       this.username = webResource.username || '';
@@ -54,8 +54,6 @@ export const useWebResources = defineStore('webResources', {
       this.resource = new Set();
       this.isOldConsole = true;
       this.fromRequest = false;
-      this.canUpdateConfig = true;
-      this.canUpdateService = true;
       this.canUpdateNamespace = true;
       this.username = '';
       this.version = 'x';

@@ -78,7 +78,7 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { createColumns } from '@/pages/columns/AppColumns';
+import { createColumns } from '@/pages/AppPage/AppColumns.jsx';
 import { useWebResources } from '@/data/resources';
 import { namespaceStore } from '@/data/namespace';
 import { appApi } from '@/api/app';
@@ -154,7 +154,15 @@ const showCreate = function () {};
 
 const showUpdate = function (row) {};
 const remove = function (row) {};
-const showDetail = function (row) {};
+const showDetail = function (row) {
+  appApi
+    .getAppInfo({
+      namespace: row.namespaceId,
+      appName: row.appName
+    })
+    .then(handleApiResult)
+    .then((obj) => {});
+};
 
 const columns = createColumns({ showUpdate, remove, showDetail, webResources });
 
