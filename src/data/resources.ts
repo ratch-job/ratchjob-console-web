@@ -15,9 +15,7 @@ function sideMenu(resource: Set<string>, isOldConsole: boolean) {
     }
     let newItem = { ...item };
     if (subItems.length == 0) {
-      if (item.path) {
-        newItem.active = true;
-      } else {
+      if (!item.path) {
         continue;
       }
     }

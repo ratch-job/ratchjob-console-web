@@ -8,6 +8,7 @@ export interface IAppInfo {
   label: string;
   namespace: string;
   registerType: string;
+  instanceAddrs?: string[];
 }
 
 export interface IAppPageParam {
@@ -20,10 +21,9 @@ export interface IAppPageParam {
 
 interface IAppInfoParam {
   namespace?: string;
-  app_name?: string;
+  appName?: string;
   label?: string;
   registerType?: string;
-  instanceAddrs?: string[];
 }
 
 class AppApi {

@@ -1,6 +1,8 @@
 import MainLayout from '@/components/layout/MainLayout.vue';
 import NotFound from '@/pages/NotFound.vue';
 import Tmp from '@/pages/Tmp.vue';
+import About from '@/pages/About.vue';
+import Index from '@/pages/IndexPage/Index.vue';
 import AppListPage from '@/pages/AppPage/AppListPage.vue';
 import { ServerOutline, CubeOutline, AppsSharp } from '@vicons/ionicons5';
 import { getMessage as t } from '@/i18n';
@@ -8,9 +10,7 @@ import { getMessage as t } from '@/i18n';
 export const routes = [
   {
     path: '/',
-    name: 'index',
-    meta: { title: 'index' },
-    component: Tmp
+    redirect: '/manage/index'
   },
   {
     path: '/404',
@@ -25,16 +25,22 @@ export const routes = [
     component: MainLayout,
     children: [
       {
+        path: '/manage/index',
+        name: 'manage index',
+        meta: { title: t('menu.index') },
+        component: Index
+      },
+      {
         path: '/manage/app',
         name: 'manage app',
         meta: { title: t('menu.app_list') },
         component: AppListPage
       },
       {
-        path: '/manage/tmp',
-        name: 'manage tmp',
-        meta: { title: 'index' },
-        component: Tmp
+        path: '/manage/about',
+        name: 'manage about',
+        meta: { title: t('menu.about') },
+        component: About
       }
     ]
   }
@@ -58,17 +64,14 @@ export const manageMenu = buildManageMenu(routes);
 
 export const sideAllMenu = [
   {
+    name: t('menu.index'),
+    icon: markRaw(AppsSharp),
+    path: '/manage/index'
+  },
+  {
     name: t('menu.app_management'),
     icon: markRaw(AppsSharp),
     path: '/manage/app'
-    /*
-    children: [
-      {
-        name: t('menu.app_list'),
-        path: '/manage/app'
-      }
-    ]
-     */
   },
   {
     name: t('menu.system_management'),
@@ -76,7 +79,7 @@ export const sideAllMenu = [
     children: [
       {
         name: t('menu.about'),
-        path: '/manage/tmp'
+        path: '/manage/about'
       }
     ]
   }

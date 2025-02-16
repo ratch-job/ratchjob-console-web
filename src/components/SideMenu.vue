@@ -3,7 +3,7 @@
     <template v-for="(item, index) in webResources.sideMenu" :key="index">
       <template v-if="item.children">
         <li
-          v-if="item.active"
+          v-if="item.path"
           :class="{ select: this.path === item.path }"
           class="group-item"
         >
@@ -14,7 +14,7 @@
             <span>{{ item.name }}</span>
           </router-link>
         </li>
-        <li v-if="!item.active" class="group-item">
+        <li v-if="!item.path" class="group-item">
           <div class="parent_item">
             <span class="icon">
               <n-icon size="16" color="#2f6cf7" :component="item.icon" />

@@ -48,6 +48,7 @@ const message = {
     enable: 'Enable'
   },
   menu: {
+    index: 'Index',
     app_management: 'AppManagement',
     app_list: 'AppList',
     system_management: 'System',
@@ -67,11 +68,19 @@ const message = {
       "Are you sure you want to delete the '<%:=name%>'(ID: <%:=id%>) namespace?",
     namespaceId_or: 'Namespace Id,null then auto create'
   },
+  about: {
+    intro_title: 'System introduction',
+    version_title: 'System version',
+    user_title: 'Current user'
+  },
   app: {
-    code: 'app code',
     name: 'app name',
-    inputCode: 'input app code',
-    searchCode: 'search app code(support fuzzy query)'
+    label: 'app label',
+    inputName: 'input app name',
+    searchName: 'search app name(support fuzzy query)',
+    instanceAddrs: 'instance address list',
+    confirm_delete_action:
+      'Are you sure you want to delete the application named <%:=appName%>?'
   },
   error: {
     NO_PERMISSION: 'NO_PERMISSION',

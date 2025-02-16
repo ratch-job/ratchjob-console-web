@@ -13,16 +13,6 @@
               >
             </p>
           </n-card>
-          <n-card :title="this.$t('about.version_title')" size="medium">
-            {{ webResources.version }}
-          </n-card>
-          <n-card
-            v-if="webResources.username !== ''"
-            :title="this.$t('about.user_title')"
-            size="medium"
-          >
-            {{ webResources.username }}
-          </n-card>
         </n-space>
       </div>
     </div>

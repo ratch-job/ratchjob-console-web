@@ -21,11 +21,11 @@ export const createColumns = function ({
 
   const columns = [
     {
-      title: t('app.code'),
+      title: t('app.name'),
       key: 'appName'
     },
     {
-      title: t('app.name'),
+      title: t('app.label'),
       key: 'label'
     },
     {
@@ -51,9 +51,8 @@ export const createColumns = function ({
             v-slots={removeConfirmSlots}
           >
             <span>
-              {template(t('config.confirm_delete_config_action'), {
-                group: row.group,
-                dataId: row.dataId
+              {template(t('app.confirm_delete_action'), {
+                appName: row.appName
               })}
             </span>
           </NPopconfirm>

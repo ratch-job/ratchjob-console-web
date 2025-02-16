@@ -49,6 +49,7 @@ const message = {
     confirm_delete_user_action: '确认要删服务名称为:<%:=username%> 的用户吗？'
   },
   menu: {
+    index: '首页',
     app_management: '应用管理',
     app_list: '应用列表',
     system_management: '系统管理',
@@ -67,11 +68,18 @@ const message = {
     confirm_delete_info: "确认要删除 '<%:=name%>'(ID: <%:=id%>) 命名空间吗？",
     namespaceId_or: '命名空间ID,不填则自动生成'
   },
+  about: {
+    intro_title: '系统简介',
+    version_title: '系统版本号',
+    user_title: '当前用户'
+  },
   app: {
-    code: '应用编码',
     name: '应用名称',
-    inputCode: '输入应用编码',
-    searchCode: '查询应用编码(支持模糊查询)'
+    label: '应用标签',
+    inputName: '输入应用名称',
+    searchName: '查询应用名称(支持模糊查询)',
+    instanceAddrs: '实例地址列表',
+    confirm_delete_action: '确认要删应用名为<%:=appName%>的应用吗？'
   },
   error: {
     NO_PERMISSION: '没有权限',

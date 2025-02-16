@@ -16,7 +16,7 @@
               <n-form-item :label="t('app.name')" path="param.serviceParam">
                 <n-input
                   v-model:value="param.appName"
-                  :placeholder="t('app.searchCode')"
+                  :placeholder="t('app.searchName')"
                   clearable
                   @keydown.enter.prevent
                   @keyup.enter="queryList"
@@ -60,7 +60,7 @@
       resizable
     >
       <n-drawer-content :title="getDetailTitle" closable>
-        <ServiceDetail :model="model" />
+        <AppDetail :model="modelRef" />
         <template #footer>
           <n-space align="baseline">
             <n-button text @click="closeForm">{{
@@ -82,7 +82,13 @@ import { createColumns } from '@/pages/AppPage/AppColumns.jsx';
 import { useWebResources } from '@/data/resources';
 import { namespaceStore } from '@/data/namespace';
 import { appApi } from '@/api/app';
-import { handleApiResult, printApiError } from '@/utils/request';
+import {
+  handleApiResult,
+  printApiSuccess,
+  printApiError
+} from '@/utils/request';
+import AppDetail from '@/pages/AppPage/AppDetail.vue';
+import * as constant from '@/types/constant';
 
 const { t } = useI18n();
 const webResources = useWebResources();
@@ -91,7 +97,18 @@ const param = ref({
   appName: ''
 });
 
+const defaultModel = {
+  appName: '',
+  label: '',
+  instanceAddrs: [],
+  registerType: '',
+  mode: constant.FORM_MODE_CREATE
+};
+
 const loadingRef = ref(false);
+const useForm = ref(false);
+
+const modelRef = ref({ ...defaultModel });
 
 const dataRef = ref([]);
 
@@ -150,10 +167,44 @@ const queryList = function () {
   doHandlePageChange(1);
 };
 
-const showCreate = function () {};
+const showCreate = function () {
+  modelRef.value = {
+    mode: constant.FORM_MODE_CREATE,
+    ...defaultModel
+  };
+  console.log('showCreate', modelRef.value);
+  useForm.value = true;
+};
 
-const showUpdate = function (row) {};
-const remove = function (row) {};
+const showUpdate = function (row) {
+  appApi
+    .getAppInfo({
+      namespace: row.namespaceId,
+      appName: row.appName
+    })
+    .then(handleApiResult)
+    .then((obj) => {
+      modelRef.value = {
+        mode: constant.FORM_MODE_UPDATE,
+        ...obj
+      };
+      useForm.value = true;
+    })
+    .catch(printApiError);
+};
+const remove = function (row) {
+  appApi
+    .removeApp({
+      namespace: row.namespaceId,
+      appName: row.appName
+    })
+    .then(handleApiResult)
+    .then(printApiSuccess)
+    .then(() => {
+      queryList();
+    })
+    .catch(printApiError);
+};
 const showDetail = function (row) {
   appApi
     .getAppInfo({
@@ -161,7 +212,40 @@ const showDetail = function (row) {
       appName: row.appName
     })
     .then(handleApiResult)
-    .then((obj) => {});
+    .then((obj) => {
+      modelRef.value = {
+        mode: constant.FORM_MODE_DETAIL,
+        ...obj
+      };
+      useForm.value = true;
+    })
+    .catch(printApiError);
+};
+
+const closeForm = function () {
+  useForm.value = false;
+};
+
+const submitForm = function () {
+  if (modelRef.value.mode === constant.FORM_MODE_DETAIL) {
+    useForm.value = false;
+    return;
+  }
+  let param = {
+    namespace:
+      modelRef.value.namespace || namespaceStore.current.value.namespaceId,
+    appName: modelRef.value.appName,
+    label: modelRef.value.label
+  };
+  appApi
+    .updateApp(param)
+    .then(handleApiResult)
+    .then(printApiSuccess)
+    .then(() => {
+      useForm.value = false;
+      queryList();
+    })
+    .catch(printApiError);
 };
 
 const columns = createColumns({ showUpdate, remove, showDetail, webResources });
