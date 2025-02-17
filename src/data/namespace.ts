@@ -42,13 +42,16 @@ function createStore(): INamespaceStore {
     optionListRef.value = optionList;
     loadRef.value = true;
   };
-  const initLoad = function () {
+  const initLoad = function (callback?: Function) {
     if (!loadRef.value) {
       namespaceApi
         .queryList()
         .then(handleApiResult)
         .then((list) => {
           setLastList(list || []);
+          if (callback) {
+            callback();
+          }
         });
     }
   };

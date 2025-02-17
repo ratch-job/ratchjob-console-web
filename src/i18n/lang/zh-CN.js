@@ -5,8 +5,8 @@ const message = {
     status: '状态',
     yes: '是',
     no: '否',
-    enabled: '正常',
-    disabled: '失效',
+    enabled: '启用',
+    disabled: '禁用',
     confirm: '确认',
     title: '标题',
     return: '返回',
@@ -50,8 +50,11 @@ const message = {
   },
   menu: {
     index: '首页',
-    app_management: '应用管理',
+    app_management: '执行器管理',
     app_list: '应用列表',
+    job_management: '任务管理',
+    job_list: '任务列表',
+    job_task_list: '任务实例列表',
     system_management: '系统管理',
     system_monitor: '系统监控',
     about: '关于'
@@ -80,6 +83,62 @@ const message = {
     searchName: '查询应用名称(支持模糊查询)',
     instanceAddrs: '实例地址列表',
     confirm_delete_action: '确认要删应用名为<%:=appName%>的应用吗？'
+  },
+  job: {
+    id: '任务ID',
+    appName: '应用名称',
+    description: '任务描述',
+    scheduleType: '调度类型',
+    cronValue: 'cron 表达式',
+    delaySecond: '延迟秒数',
+    intervalSecond: '间隔秒数',
+    runMode: '运行模式',
+    handleName: '处理名称',
+    triggerParam: '触发参数',
+    routerStrategy: '路由策略',
+    pastDueStrategy: '逾期策略',
+    blockingStrategy: '阻塞策略',
+    timeoutSecond: '超时秒数',
+    tryTimes: '重试次数',
+    confirm_delete_action: '确认要删除任务名为<%:=appName%>的任务吗？',
+    task_list: '执行实例',
+    enableStatus: '启动状态',
+    types: {
+      scheduleType: {
+        none: '无',
+        cron: 'CRON',
+        interval: '间隔',
+        delay: '延迟'
+      },
+      runMode: {
+        bean: 'Bean',
+        glueGroovy: 'Groovy',
+        glueShell: 'Shell',
+        gluePython: 'Python',
+        gluePhp: 'PHP',
+        glueNodejs: 'Node.js',
+        gluePowerShell: 'PowerShell'
+      },
+      routerStrategy: {
+        first: '第一个',
+        last: '最后一个',
+        roundRobin: '轮询',
+        random: '随机',
+        consistentHash: '一致性哈希',
+        shardingBroadcast: '分片广播'
+      },
+      pastDueStrategy: {
+        default: '默认',
+        ignore: '忽略',
+        execute: '执行'
+      },
+      executorBlockStrategy: {
+        serialExecution: '串行执行',
+        discardLater: '丢弃后续',
+        coverEarly: '覆盖早期',
+        other: '其他'
+      }
+    }
   },
   error: {
     NO_PERMISSION: '没有权限',

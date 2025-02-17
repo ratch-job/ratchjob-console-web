@@ -2,7 +2,7 @@
   <div class="wrap">
     <div class="header">
       <div class="title">
-        <span> {{ t('menu.app_list') }} </span>
+        <span> {{ t('menu.job_list') }} </span>
       </div>
       <div class="namespace">
         <NamespacePopSelect @change="queryList" />
@@ -13,15 +13,45 @@
         <div class="query-params">
           <n-form label-placement="left" label-width="auto">
             <div class="paramWrap">
-              <n-form-item :label="t('app.name')" path="param.appName">
-                <n-input
+              <n-form-item
+                class="app-name"
+                :label="t('job.appName')"
+                path="param.appName"
+              >
+                <n-select
+                  class="app-name"
                   v-model:value="param.appName"
-                  :placeholder="t('app.searchName')"
-                  clearable
-                  @keydown.enter.prevent
-                  @keyup.enter="queryList"
+                  :options="appList"
                 />
               </n-form-item>
+              <div class="paramWrap">
+                <n-form-item
+                  :label="t('job.description')"
+                  path="param.description"
+                >
+                  <n-input
+                    v-model:value="param.description"
+                    :placeholder="t('job.description')"
+                    clearable
+                    @keydown.enter.prevent
+                    @keyup.enter="queryList"
+                  />
+                </n-form-item>
+              </div>
+              <div class="paramWrap">
+                <n-form-item
+                  :label="t('job.handleName')"
+                  path="param.handleName"
+                >
+                  <n-input
+                    v-model:value="param.handleName"
+                    :placeholder="t('job.handleName')"
+                    clearable
+                    @keydown.enter.prevent
+                    @keyup.enter="queryList"
+                  />
+                </n-form-item>
+              </div>
             </div>
           </n-form>
           <div class="queryButton">
@@ -51,57 +81,62 @@
         />
       </div>
     </div>
-    <n-drawer
-      to="#main_content"
-      :block-scroll="false"
-      :trap-focus="false"
-      v-model:show="useForm"
-      default-width="600"
-      resizable
+    <SubContentFullPage
+      v-show="useForm"
+      :title="getDetailTitle"
+      @close="closeForm"
+      @submit="submitForm"
     >
-      <n-drawer-content :title="getDetailTitle" closable>
-        <AppDetail :model="modelRef" />
-        <template #footer>
-          <n-space align="baseline">
-            <n-button text @click="closeForm">{{
-              t('common.return')
-            }}</n-button>
-            <n-button type="primary" @click="submitForm">{{
-              t('common.confirm')
-            }}</n-button>
-          </n-space>
-        </template>
-      </n-drawer-content>
-    </n-drawer>
+      <JobDetail :model="modelRef" :appList="appList" />
+    </SubContentFullPage>
   </div>
 </template>
+
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { createColumns } from '@/pages/AppPage/AppColumns.jsx';
+import { createColumns } from '@/pages/JobPage/JobColumns.jsx';
 import { useWebResources } from '@/data/resources';
 import { namespaceStore } from '@/data/namespace';
+import { jobApi } from '@/api/job';
 import { appApi } from '@/api/app';
+import SubContentFullPage from '@/components/common/SubContentFullPage';
 import {
   handleApiResult,
   printApiSuccess,
   printApiError
 } from '@/utils/request';
-import AppDetail from '@/pages/AppPage/AppDetail.vue';
+import JobDetail from '@/pages/JobPage/JobDetail.vue';
 import * as constant from '@/types/constant';
+import { ScheduleTypeOptions } from '@/pages/JobPage/SeleteType.js';
 
 const { t } = useI18n();
 const webResources = useWebResources();
 
 const param = ref({
+  description: '',
+  handleName: '',
   appName: ''
 });
 
 const defaultModel = {
+  id: 0,
   appName: '',
-  label: '',
-  instanceAddrs: [],
-  registerType: '',
+  enable: true,
+  namespace: '',
+  description: '',
+  scheduleType: '',
+  cronValue: '',
+  delaySecond: 0,
+  intervalSecond: 0,
+  runMode: '',
+  handleName: '',
+  triggerParam: '',
+  routerStrategy: '',
+  pastDueStrategy: '',
+  blockingStrategy: '',
+  timeoutSecond: 0,
+  tryTimes: 0,
   mode: constant.FORM_MODE_CREATE
 };
 
@@ -111,6 +146,13 @@ const useForm = ref(false);
 const modelRef = ref({ ...defaultModel });
 
 const dataRef = ref([]);
+
+const defaultApp = {
+  value: '',
+  label: ''
+};
+
+const appList = ref([defaultApp]);
 
 const pagination = reactive({
   page: 1,
@@ -130,13 +172,15 @@ const pagination = reactive({
 });
 
 const rowKey = function (rowData) {
-  return rowData.name;
+  return rowData.id;
 };
 
 const queryPage = function (pageNo) {
-  return appApi.getAppList({
+  return jobApi.getJobList({
     namespace: namespaceStore.current.value.namespaceId,
-    likeAppName: param.value.appName,
+    appName: param.value.appName,
+    likeDescription: param.value.description,
+    likeHandleName: param.value.description,
     pageNo: pageNo,
     pageSize: pagination.pageSize
   });
@@ -176,25 +220,17 @@ const showCreate = function () {
 };
 
 const showUpdate = function (row) {
-  appApi
-    .getAppInfo({
-      namespace: row.namespaceId,
-      appName: row.appName
-    })
-    .then(handleApiResult)
-    .then((obj) => {
-      modelRef.value = {
-        mode: constant.FORM_MODE_UPDATE,
-        ...obj
-      };
-      useForm.value = true;
-    })
-    .catch(printApiError);
+  modelRef.value = {
+    mode: constant.FORM_MODE_UPDATE,
+    ...row
+  };
+  useForm.value = true;
 };
+
 const remove = function (row) {
-  appApi
-    .removeApp({
-      namespace: row.namespaceId,
+  jobApi
+    .removeJob({
+      namespace: row.namespace,
       appName: row.appName
     })
     .then(handleApiResult)
@@ -204,21 +240,13 @@ const remove = function (row) {
     })
     .catch(printApiError);
 };
+
 const showDetail = function (row) {
-  appApi
-    .getAppInfo({
-      namespace: row.namespaceId,
-      appName: row.appName
-    })
-    .then(handleApiResult)
-    .then((obj) => {
-      modelRef.value = {
-        mode: constant.FORM_MODE_DETAIL,
-        ...obj
-      };
-      useForm.value = true;
-    })
-    .catch(printApiError);
+  modelRef.value = {
+    mode: constant.FORM_MODE_DETAIL,
+    ...row
+  };
+  useForm.value = true;
 };
 
 const closeForm = function () {
@@ -231,13 +259,30 @@ const submitForm = function () {
     return;
   }
   let param = {
+    id: modelRef.value.id,
     namespace:
       modelRef.value.namespace || namespaceStore.current.value.namespaceId,
+    enable: modelRef.value.enable,
     appName: modelRef.value.appName,
-    label: modelRef.value.label
+    description: modelRef.value.description,
+    scheduleType: modelRef.value.scheduleType,
+    cronValue: modelRef.value.cronValue,
+    delaySecond: modelRef.value.delaySecond,
+    intervalSecond: modelRef.value.intervalSecond,
+    runMode: modelRef.value.runMode,
+    handleName: modelRef.value.handleName,
+    triggerParam: modelRef.value.triggerParam,
+    routerStrategy: modelRef.value.routerStrategy,
+    pastDueStrategy: modelRef.value.pastDueStrategy,
+    blockingStrategy: modelRef.value.blockingStrategy,
+    timeoutSecond: modelRef.value.timeoutSecond,
+    tryTimes: modelRef.value.tryTimes
   };
-  appApi
-    .updateApp(param)
+  let api =
+    modelRef.value.mode === constant.FORM_MODE_CREATE
+      ? jobApi.createJob
+      : jobApi.updateJob;
+  api(param)
     .then(handleApiResult)
     .then(printApiSuccess)
     .then(() => {
@@ -247,10 +292,34 @@ const submitForm = function () {
     .catch(printApiError);
 };
 
+const initAppList = function () {
+  appApi
+    .getAppList({
+      namespace: namespaceStore.current.value.namespaceId
+    })
+    .then(handleApiResult)
+    .then((page) => {
+      console.log('initAppList result', page);
+      let options = [];
+      for (var item of page.list) {
+        options.push({
+          value: item.appName,
+          label: item.label || item.appName
+        });
+      }
+      if (options.length == 0) {
+        options.push(defaultApp);
+      }
+      appList.value = options;
+    })
+    .catch(printApiError);
+};
+
 const columns = createColumns({ showUpdate, remove, showDetail, webResources });
 
 onMounted(() => {
   namespaceStore.initLoad();
+  setTimeout(() => initAppList(), 100);
   queryList();
 });
 </script>
@@ -296,6 +365,10 @@ onMounted(() => {
 
 .header-button {
   flex: 0 0 auto;
+}
+
+.app-name {
+  width: 260px;
 }
 
 .namespace {

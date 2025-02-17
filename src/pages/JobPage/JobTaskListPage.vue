@@ -2,7 +2,7 @@
   <div class="wrap">
     <div class="header">
       <div class="title">
-        <span> {{ t('menu.app_list') }} </span>
+        <span> {{ t('menu.job_task_list') }} </span>
       </div>
       <div class="namespace">
         <NamespacePopSelect @change="queryList" />
@@ -13,10 +13,11 @@
         <div class="query-params">
           <n-form label-placement="left" label-width="auto">
             <div class="paramWrap">
-              <n-form-item :label="t('app.name')" path="param.appName">
+              <n-form-item :label="t('job.id')" path="param.id">
                 <n-input
-                  v-model:value="param.appName"
-                  :placeholder="t('app.searchName')"
+                  :disabled="true"
+                  v-model:value="param.jobId"
+                  :placeholder="t('job.id')"
                   clearable
                   @keydown.enter.prevent
                   @keyup.enter="queryList"
@@ -28,11 +29,6 @@
             <span class="query-button-item">
               <n-button tertiary @click="queryList">{{
                 t('common.query')
-              }}</n-button>
-            </span>
-            <span class="query-button-item">
-              <n-button type="info" @click="showCreate">{{
-                t('common.add')
               }}</n-button>
             </span>
           </div>
@@ -51,64 +47,32 @@
         />
       </div>
     </div>
-    <n-drawer
-      to="#main_content"
-      :block-scroll="false"
-      :trap-focus="false"
-      v-model:show="useForm"
-      default-width="600"
-      resizable
-    >
-      <n-drawer-content :title="getDetailTitle" closable>
-        <AppDetail :model="modelRef" />
-        <template #footer>
-          <n-space align="baseline">
-            <n-button text @click="closeForm">{{
-              t('common.return')
-            }}</n-button>
-            <n-button type="primary" @click="submitForm">{{
-              t('common.confirm')
-            }}</n-button>
-          </n-space>
-        </template>
-      </n-drawer-content>
-    </n-drawer>
   </div>
 </template>
+
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { createColumns } from '@/pages/AppPage/AppColumns.jsx';
-import { useWebResources } from '@/data/resources';
+//import { createJobTaskColumns } from '@/pages/JobPage/JobTaskColumns.jsx';
+import { createJobTaskColumns } from '@/pages/JobPage/JobColumns.jsx';
 import { namespaceStore } from '@/data/namespace';
-import { appApi } from '@/api/app';
+import { useRoute } from 'vue-router';
+import { jobApi } from '@/api/job';
 import {
   handleApiResult,
   printApiSuccess,
   printApiError
 } from '@/utils/request';
-import AppDetail from '@/pages/AppPage/AppDetail.vue';
-import * as constant from '@/types/constant';
 
 const { t } = useI18n();
-const webResources = useWebResources();
+
+let route = useRoute();
 
 const param = ref({
-  appName: ''
+  jobId: route.query.jobId || '0'
 });
 
-const defaultModel = {
-  appName: '',
-  label: '',
-  instanceAddrs: [],
-  registerType: '',
-  mode: constant.FORM_MODE_CREATE
-};
-
 const loadingRef = ref(false);
-const useForm = ref(false);
-
-const modelRef = ref({ ...defaultModel });
 
 const dataRef = ref([]);
 
@@ -130,13 +94,12 @@ const pagination = reactive({
 });
 
 const rowKey = function (rowData) {
-  return rowData.name;
+  return rowData.taskId;
 };
 
 const queryPage = function (pageNo) {
-  return appApi.getAppList({
-    namespace: namespaceStore.current.value.namespaceId,
-    likeAppName: param.value.appName,
+  return jobApi.getJobTaskList({
+    jobId: param.value.jobId,
     pageNo: pageNo,
     pageSize: pagination.pageSize
   });
@@ -167,87 +130,7 @@ const queryList = function () {
   doHandlePageChange(1);
 };
 
-const showCreate = function () {
-  modelRef.value = {
-    mode: constant.FORM_MODE_CREATE,
-    ...defaultModel
-  };
-  useForm.value = true;
-};
-
-const showUpdate = function (row) {
-  appApi
-    .getAppInfo({
-      namespace: row.namespaceId,
-      appName: row.appName
-    })
-    .then(handleApiResult)
-    .then((obj) => {
-      modelRef.value = {
-        mode: constant.FORM_MODE_UPDATE,
-        ...obj
-      };
-      useForm.value = true;
-    })
-    .catch(printApiError);
-};
-const remove = function (row) {
-  appApi
-    .removeApp({
-      namespace: row.namespaceId,
-      appName: row.appName
-    })
-    .then(handleApiResult)
-    .then(printApiSuccess)
-    .then(() => {
-      queryList();
-    })
-    .catch(printApiError);
-};
-const showDetail = function (row) {
-  appApi
-    .getAppInfo({
-      namespace: row.namespaceId,
-      appName: row.appName
-    })
-    .then(handleApiResult)
-    .then((obj) => {
-      modelRef.value = {
-        mode: constant.FORM_MODE_DETAIL,
-        ...obj
-      };
-      useForm.value = true;
-    })
-    .catch(printApiError);
-};
-
-const closeForm = function () {
-  useForm.value = false;
-};
-
-const submitForm = function () {
-  if (modelRef.value.mode === constant.FORM_MODE_DETAIL) {
-    useForm.value = false;
-    return;
-  }
-  let param = {
-    namespace:
-      modelRef.value.namespace || namespaceStore.current.value.namespaceId,
-    appName: modelRef.value.appName,
-    label: modelRef.value.label
-  };
-  appApi
-    .updateApp(param)
-    .then(handleApiResult)
-    .then(printApiSuccess)
-    .then(() => {
-      useForm.value = false;
-      queryList();
-    })
-    .catch(printApiError);
-};
-
-const columns = createColumns({ showUpdate, remove, showDetail, webResources });
+const columns = createJobTaskColumns();
 
 onMounted(() => {
   namespaceStore.initLoad();

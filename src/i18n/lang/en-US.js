@@ -49,8 +49,11 @@ const message = {
   },
   menu: {
     index: 'Index',
-    app_management: 'AppManagement',
+    app_management: 'ExecutorManagement',
     app_list: 'AppList',
+    job_management: 'JobManagement',
+    job_list: 'JobList',
+    job_task_list: 'JobTaskList',
     system_management: 'System',
     system_monitor: 'Monitor',
     about: 'About'
@@ -81,6 +84,63 @@ const message = {
     instanceAddrs: 'instance address list',
     confirm_delete_action:
       'Are you sure you want to delete the application named <%:=appName%>?'
+  },
+  job: {
+    id: 'JobID',
+    appName: 'app name',
+    description: 'job description',
+    scheduleType: 'schedule type',
+    cronValue: 'cron value',
+    delaySecond: 'delay second',
+    intervalSecond: 'interval second',
+    runMode: 'run mode',
+    handleName: 'handle name',
+    triggerParam: 'trigger param',
+    routerStrategy: 'router strategy',
+    pastDueStrategy: 'past due strategy',
+    blockingStrategy: 'blocking strategy',
+    timeoutSecond: 'timeout second',
+    tryTimes: 'try times',
+    confirm_delete_action:
+      'Are you sure you want to delete the job named <%:=appName%>?',
+    task_list: 'Task list',
+    enableStatus: 'EnableStatus',
+    types: {
+      scheduleType: {
+        none: 'None',
+        cron: 'Cron',
+        interval: 'Interval',
+        delay: 'Delay'
+      },
+      runMode: {
+        bean: 'Bean',
+        glueGroovy: 'Glue Groovy',
+        glueShell: 'Glue Shell',
+        gluePython: 'Glue Python',
+        gluePhp: 'Glue PHP',
+        glueNodejs: 'Glue Node.js',
+        gluePowerShell: 'Glue PowerShell'
+      },
+      routerStrategy: {
+        first: 'First',
+        last: 'Last',
+        roundRobin: 'Round Robin',
+        random: 'Random',
+        consistentHash: 'Consistent Hash',
+        shardingBroadcast: 'Sharding Broadcast'
+      },
+      pastDueStrategy: {
+        default: 'Default',
+        ignore: 'Ignore',
+        execute: 'Execute'
+      },
+      executorBlockStrategy: {
+        serialExecution: 'Serial Execution',
+        discardLater: 'Discard Later',
+        coverEarly: 'Cover Early',
+        other: 'Other'
+      }
+    }
   },
   error: {
     NO_PERMISSION: 'NO_PERMISSION',

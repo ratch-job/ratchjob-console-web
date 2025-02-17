@@ -4,6 +4,8 @@ import Tmp from '@/pages/Tmp.vue';
 import About from '@/pages/About.vue';
 import Index from '@/pages/IndexPage/Index.vue';
 import AppListPage from '@/pages/AppPage/AppListPage.vue';
+import JobListPage from '@/pages/JobPage/JobListPage.vue';
+import JobTaskListPage from '@/pages/JobPage/JobTaskListPage.vue';
 import { ServerOutline, CubeOutline, AppsSharp } from '@vicons/ionicons5';
 import { getMessage as t } from '@/i18n';
 
@@ -35,6 +37,18 @@ export const routes = [
         name: 'manage app',
         meta: { title: t('menu.app_list') },
         component: AppListPage
+      },
+      {
+        path: '/manage/job',
+        name: 'manage job',
+        meta: { title: t('menu.job_list') },
+        component: JobListPage
+      },
+      {
+        path: '/manage/job/task',
+        name: 'manage job task',
+        meta: { title: t('menu.job_task_list') },
+        component: JobTaskListPage
       },
       {
         path: '/manage/about',
@@ -72,6 +86,16 @@ export const sideAllMenu = [
     name: t('menu.app_management'),
     icon: markRaw(AppsSharp),
     path: '/manage/app'
+  },
+  {
+    name: t('menu.job_management'),
+    icon: markRaw(AppsSharp),
+    children: [
+      {
+        name: t('menu.job_list'),
+        path: '/manage/job'
+      }
+    ]
   },
   {
     name: t('menu.system_management'),
