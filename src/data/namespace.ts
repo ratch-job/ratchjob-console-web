@@ -9,19 +9,19 @@ const NAMESPACE_STORAGE_KEY = 'APP_NAMESPACE_KEY';
 
 function createStore(): INamespaceStore {
   const currentRef: Ref<UnwrapRef<INamespace>> = ref({
-    namespaceId: 'default',
-    namespaceName: 'default'
+    namespaceId: 'xxl',
+    namespaceName: 'xxl'
   });
   const listListRef: Ref<UnwrapRef<Array<INamespace>>> = ref([
     {
-      namespaceId: 'default',
-      namespaceName: 'default'
+      namespaceId: 'xxl',
+      namespaceName: 'xxl'
     }
   ]);
   const optionListRef: Ref<UnwrapRef<Array<ILabelItem>>> = ref([
     {
-      label: 'default',
-      value: 'default'
+      label: 'xxl',
+      value: 'xxl'
     }
   ]);
   const loadRef = ref(false);
