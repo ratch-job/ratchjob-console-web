@@ -68,7 +68,7 @@ export interface IJobTaskInfo {
 }
 
 export interface IJobTaskPageParam {
-  jobId: number;
+  jobId?: number;
   pageNo: number;
   pageSize: number;
 }
@@ -104,6 +104,18 @@ class JobApi {
     return axios.request({
       method: 'get',
       url: '/ratchjob/api/console/v1/job/task/list',
+      params: {
+        ...param
+      }
+    });
+  }
+
+  getJobTaskHistoryList(
+    param: IJobTaskPageParam
+  ): Promise<AxiosResponse<IApiResult<IJobTaskPageParam>>> {
+    return axios.request({
+      method: 'get',
+      url: '/ratchjob/api/console/v1/job/task/latest-history',
       params: {
         ...param
       }

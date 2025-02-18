@@ -6,6 +6,7 @@ import Index from '@/pages/IndexPage/Index.vue';
 import AppListPage from '@/pages/AppPage/AppListPage.vue';
 import JobListPage from '@/pages/JobPage/JobListPage.vue';
 import JobTaskListPage from '@/pages/JobPage/JobTaskListPage.vue';
+import JobTaskLatestHistoryPage from '@/pages/JobPage/JobTaskLatestHistoryPage.vue';
 import { ServerOutline, CubeOutline, AppsSharp } from '@vicons/ionicons5';
 import { getMessage as t } from '@/i18n';
 
@@ -51,6 +52,12 @@ export const routes = [
         component: JobTaskListPage
       },
       {
+        path: '/manage/task/latest',
+        name: 'manage task latest',
+        meta: { title: t('menu.task_latest_list') },
+        component: JobTaskLatestHistoryPage
+      },
+      {
         path: '/manage/about',
         name: 'manage about',
         meta: { title: t('menu.about') },
@@ -94,6 +101,10 @@ export const sideAllMenu = [
       {
         name: t('menu.job_list'),
         path: '/manage/job'
+      },
+      {
+        name: t('menu.task_latest_list'),
+        path: '/manage/task/latest'
       }
     ]
   },

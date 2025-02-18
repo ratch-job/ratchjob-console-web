@@ -121,19 +121,20 @@ export const createColumns = function ({
 };
 
 export const createJobTaskColumns = function () {
+  const { t } = useI18n();
   const columns = [
     {
-      title: 'Task ID',
+      title: t('task.taskId'),
       key: 'taskId',
       width: 80
     },
     {
-      title: 'Job ID',
+      title: t('task.jobId'),
       key: 'jobId',
       width: 80
     },
     {
-      title: 'Trigger Time',
+      title: t('task.triggerTime'),
       key: 'triggerTime',
       width: 200,
       render(row) {
@@ -146,12 +147,12 @@ export const createJobTaskColumns = function () {
       }
     },
     {
-      title: 'Instance Address',
+      title: t('task.instanceAddr'),
       key: 'instanceAddr',
       width: 200
     },
     {
-      title: 'Status',
+      title: t('task.status'),
       key: 'status',
       width: 100,
       render(row) {
@@ -165,14 +166,14 @@ export const createJobTaskColumns = function () {
           tagType = 'warning';
         }
         return (
-          <NTag type={tagType} round>
+          <NTag size="small" type={tagType} round>
             {value}
           </NTag>
         );
       }
     },
     {
-      title: 'Finish Time',
+      title: t('task.finishTime'),
       key: 'finishTime',
       width: 200,
       render(row) {
@@ -185,12 +186,12 @@ export const createJobTaskColumns = function () {
       }
     },
     {
-      title: 'Trigger Message',
+      title: t('task.triggerMessage'),
       key: 'triggerMessage',
       width: 200
     },
     {
-      title: 'Callback Message',
+      title: t('task.callbackMessage'),
       key: 'callbackMessage',
       width: 200
     }

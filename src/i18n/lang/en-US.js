@@ -54,6 +54,7 @@ const message = {
     job_management: 'JobManagement',
     job_list: 'JobList',
     job_task_list: 'JobTaskList',
+    task_latest_list: 'LatestTaskList',
     system_management: 'System',
     system_monitor: 'Monitor',
     about: 'About'
@@ -141,6 +142,16 @@ const message = {
         other: 'Other'
       }
     }
+  },
+  task: {
+    taskId: 'TaskID',
+    jobId: 'JobID',
+    triggerTime: 'TriggerTime',
+    instanceAddr: 'InstanceAddr',
+    triggerMessage: 'TriggerMessage',
+    status: 'Status',
+    finishTime: 'FinishTime',
+    callbackMessage: 'CallbackMessage'
   },
   error: {
     NO_PERMISSION: 'NO_PERMISSION',

@@ -55,6 +55,7 @@ const message = {
     job_management: '任务管理',
     job_list: '任务列表',
     job_task_list: '任务实例列表',
+    task_latest_list: '最近任务执行记录',
     system_management: '系统管理',
     system_monitor: '系统监控',
     about: '关于'
@@ -139,6 +140,16 @@ const message = {
         other: '其他'
       }
     }
+  },
+  task: {
+    taskId: '任务实例ID',
+    jobId: '任务ID',
+    triggerTime: '触发时间',
+    instanceAddr: '实例地址',
+    triggerMessage: '触发消息',
+    status: '状态',
+    finishTime: '完成时间',
+    callbackMessage: '回调消息'
   },
   error: {
     NO_PERMISSION: '没有权限',
