@@ -191,6 +191,7 @@ const showUpdate = function (row) {
     })
     .catch(printApiError);
 };
+
 const remove = function (row) {
   appApi
     .removeApp({

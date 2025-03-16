@@ -1,23 +1,23 @@
 <template>
   <div class="detailWrap">
     <n-form ref="formRef" :model="model" :rules="rules">
-      <n-form-item path="appName" :label="this.$t('app.name')">
+      <n-form-item path="appName" :label="t('app.name')">
         <n-input
           :disabled="isKeyReadonly"
-          :placeholder="this.$t('app.name')"
+          :placeholder="t('app.name')"
           v-model:value="model.appName"
           @keydown.enter.prevent
         />
       </n-form-item>
-      <n-form-item path="label" :label="this.$t('app.label')">
+      <n-form-item path="label" :label="t('app.label')">
         <n-input
           :disabled="isReadonly"
-          :placeholder="this.$t('app.label')"
+          :placeholder="t('app.label')"
           v-model:value="model.label"
           @keydown.enter.prevent
         />
       </n-form-item>
-      <n-form-item path="instanceAddrs" :label="this.$t('app.instanceAddrs')">
+      <n-form-item path="instanceAddrs" :label="t('app.instanceAddrs')">
         <ul class="addr-group" v-for="item in model.instanceAddrs">
           <li class="addr-item">{{ item }}</li>
         </ul>
@@ -29,13 +29,13 @@
 <script setup>
 import { computed, reactive } from 'vue';
 import * as constant from '@/types/constant';
+import { useI18n } from 'vue-i18n';
 
 // Props
 const props = defineProps({
   model: Object
 });
 
-console.log('AppDetail model', props.model);
 // Computed properties
 const isReadonly = computed(
   () => props.model.mode === constant.FORM_MODE_DETAIL
@@ -59,6 +59,7 @@ const rules = reactive({
     }
   ]
 });
+const { t } = useI18n();
 </script>
 
 <style scoped>
