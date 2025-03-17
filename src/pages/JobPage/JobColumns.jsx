@@ -9,7 +9,8 @@ export const createColumns = function ({
   showDetail,
   showUpdate,
   showClone,
-  remove, trigger,
+  remove,
+  trigger,
   webResources
 }) {
   const { t } = useI18n();

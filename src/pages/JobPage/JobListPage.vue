@@ -229,12 +229,12 @@ const showUpdate = function (row) {
 
 const showClone = function (row) {
   let description = row.description || '';
-  description+="_"+t('common.clone');
+  description += '_' + t('common.clone');
   modelRef.value = {
     mode: constant.FORM_MODE_CREATE,
     ...row,
     id: 0,
-    description: description,
+    description: description
   };
   useForm.value = true;
 };
@@ -336,7 +336,14 @@ const initAppList = function () {
     .catch(printApiError);
 };
 
-const columns = createColumns({ showUpdate,showClone ,showDetail , remove, trigger, webResources });
+const columns = createColumns({
+  showUpdate,
+  showClone,
+  showDetail,
+  remove,
+  trigger,
+  webResources
+});
 
 onMounted(() => {
   namespaceStore.initLoad();
