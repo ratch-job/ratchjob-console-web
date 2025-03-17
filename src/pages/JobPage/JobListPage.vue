@@ -227,17 +227,38 @@ const showUpdate = function (row) {
   useForm.value = true;
 };
 
+const showClone = function (row) {
+  let description = row.description || '';
+  description+="_"+t('common.clone');
+  modelRef.value = {
+    mode: constant.FORM_MODE_CREATE,
+    ...row,
+    id: 0,
+    description: description,
+  };
+  useForm.value = true;
+};
+
 const remove = function (row) {
   jobApi
     .removeJob({
-      namespace: row.namespace,
-      appName: row.appName
+      id: row.id
     })
     .then(handleApiResult)
     .then(printApiSuccess)
     .then(() => {
       queryList();
     })
+    .catch(printApiError);
+};
+
+const trigger = function (row) {
+  jobApi
+    .triggerJob({
+      jobId: row.id
+    })
+    .then(handleApiResult)
+    .then(printApiSuccess)
     .catch(printApiError);
 };
 
@@ -299,7 +320,7 @@ const initAppList = function () {
     })
     .then(handleApiResult)
     .then((page) => {
-      console.log('initAppList result', page);
+      //console.log('initAppList result', page);
       let options = [];
       for (var item of page.list) {
         options.push({
@@ -315,7 +336,7 @@ const initAppList = function () {
     .catch(printApiError);
 };
 
-const columns = createColumns({ showUpdate, remove, showDetail, webResources });
+const columns = createColumns({ showUpdate,showClone ,showDetail , remove, trigger, webResources });
 
 onMounted(() => {
   namespaceStore.initLoad();

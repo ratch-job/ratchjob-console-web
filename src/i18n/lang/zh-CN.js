@@ -18,6 +18,7 @@ const message = {
     history: '历史记录',
     operation: '操作',
     clone: '克隆',
+    trigger: '触发',
     updatedtime: '更新时间',
     recover: '恢复',
     request_fail: '请求失败',
@@ -101,7 +102,8 @@ const message = {
     blockingStrategy: '阻塞策略',
     timeoutSecond: '超时秒数',
     tryTimes: '重试次数',
-    confirm_delete_action: '确认要删除任务名为<%:=appName%>的任务吗？',
+    confirm_delete_action: '确认要删除id为<%:=id%>的任务吗？',
+    confirm_trigger_action: '确认要触发id为<%:=id%>的任务吗？',
     task_list: '执行实例',
     enableStatus: '启动状态',
     types: {

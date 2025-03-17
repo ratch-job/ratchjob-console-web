@@ -191,7 +191,7 @@ const props = defineProps({
   appList: Object
 });
 
-console.log('JobDetail model', props.model);
+//console.log('JobDetail model', props.model);
 
 // Computed properties
 const isReadonly = computed(

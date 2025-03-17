@@ -7,7 +7,7 @@ import AppListPage from '@/pages/AppPage/AppListPage.vue';
 import JobListPage from '@/pages/JobPage/JobListPage.vue';
 import JobTaskListPage from '@/pages/JobPage/JobTaskListPage.vue';
 import JobTaskLatestHistoryPage from '@/pages/JobPage/JobTaskLatestHistoryPage.vue';
-import { ServerOutline, CubeOutline, AppsSharp } from '@vicons/ionicons5';
+import { AppsSharp, List, HomeSharp } from '@vicons/ionicons5';
 import { getMessage as t } from '@/i18n';
 
 export const routes = [
@@ -86,7 +86,7 @@ export const manageMenu = buildManageMenu(routes);
 export const sideAllMenu = [
   {
     name: t('menu.index'),
-    icon: markRaw(AppsSharp),
+    icon: markRaw(HomeSharp),
     path: '/manage/index'
   },
   {
@@ -96,7 +96,7 @@ export const sideAllMenu = [
   },
   {
     name: t('menu.job_management'),
-    icon: markRaw(AppsSharp),
+    icon: markRaw(List),
     children: [
       {
         name: t('menu.job_list'),

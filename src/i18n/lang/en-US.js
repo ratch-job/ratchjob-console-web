@@ -18,6 +18,7 @@ const message = {
     history: 'History',
     operation: 'Operation',
     clone: 'Clone',
+    trigger: 'Trigger',
     updatedtime: 'Updated Time',
     recover: 'Recover',
     request_fail: 'Request Fail',
@@ -103,7 +104,8 @@ const message = {
     timeoutSecond: 'timeout second',
     tryTimes: 'try times',
     confirm_delete_action:
-      'Are you sure you want to delete the job named <%:=appName%>?',
+      'Are you sure you want to delete the task whose id is <%:=id%>?',
+    confirm_trigger_action: 'Are you sure you want to trigger the task with id <%:=id%>?',
     task_list: 'Task list',
     enableStatus: 'EnableStatus',
     types: {

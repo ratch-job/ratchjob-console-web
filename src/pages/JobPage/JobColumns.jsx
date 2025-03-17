@@ -8,7 +8,8 @@ import router from '@/route/router.js';
 export const createColumns = function ({
   showDetail,
   showUpdate,
-  remove,
+  showClone,
+  remove, trigger,
   webResources
 }) {
   const { t } = useI18n();
@@ -17,6 +18,15 @@ export const createColumns = function ({
       return (
         <NButton size="tiny" quaternary type="error">
           {t('common.delete')}
+        </NButton>
+      );
+    }
+  };
+  const triggerConfirmSlots = {
+    trigger: () => {
+      return (
+        <NButton size="tiny" quaternary type="error">
+          {t('common.trigger')}
         </NButton>
       );
     }
@@ -63,6 +73,8 @@ export const createColumns = function ({
       render(row) {
         let editButton;
         let removePopconfirm;
+        let cloneButton;
+        let triggerPopconfirm;
         editButton = (
           <NButton
             size="tiny"
@@ -73,6 +85,28 @@ export const createColumns = function ({
             {t('common.edit')}
           </NButton>
         );
+        cloneButton = (
+          <NButton
+            size="tiny"
+            quaternary
+            type="info"
+            onClick={() => showClone(row)}
+          >
+            {t('common.clone')}
+          </NButton>
+        );
+        triggerPopconfirm = (
+          <NPopconfirm
+            onPositiveClick={() => trigger(row)}
+            v-slots={triggerConfirmSlots}
+          >
+            <span>
+              {template(t('job.confirm_trigger_action'), {
+                id: row.id
+              })}
+            </span>
+          </NPopconfirm>
+        );
         removePopconfirm = (
           <NPopconfirm
             onPositiveClick={() => remove(row)}
@@ -80,7 +114,7 @@ export const createColumns = function ({
           >
             <span>
               {template(t('job.confirm_delete_action'), {
-                appName: row.appName
+                id: row.id
               })}
             </span>
           </NPopconfirm>
@@ -111,6 +145,8 @@ export const createColumns = function ({
               {t('job.task_list')}
             </NButton>
             {editButton}
+            {cloneButton}
+            {triggerPopconfirm}
             {removePopconfirm}
           </div>
         );

@@ -24,6 +24,11 @@ export interface IJobInfoParam {
   tryTimes?: number;
 }
 
+export interface ITriggerJobParam {
+  jobId: number;
+  instance_addr: string;
+}
+
 export interface IJobInfo {
   id: number;
   enable: boolean;
@@ -142,6 +147,14 @@ class JobApi {
     return axios.requestJSON({
       method: 'post',
       url: '/ratchjob/api/console/v1/job/remove',
+      data: param
+    });
+  }
+
+  triggerJob(param: ITriggerJobParam): Promise<AxiosResponse<IApiResult<any>>> {
+    return axios.requestJSON({
+      method: 'post',
+      url: '/ratchjob/api/console/v1/job/trigger',
       data: param
     });
   }
