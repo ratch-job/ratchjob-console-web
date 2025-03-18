@@ -29,6 +29,10 @@ export interface ITriggerJobParam {
   instance_addr: string;
 }
 
+export interface IJobInfoParam {
+  id?: number;
+}
+
 export interface IJobInfo {
   id: number;
   enable: boolean;
@@ -92,7 +96,7 @@ class JobApi {
   }
 
   getJobInfo(
-    param: IJobPageParam
+    param: IJobInfoParam
   ): Promise<AxiosResponse<IApiResult<IJobInfo>>> {
     return axios.request({
       method: 'get',

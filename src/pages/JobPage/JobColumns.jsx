@@ -157,7 +157,7 @@ export const createColumns = function ({
   return columns;
 };
 
-export const createJobTaskColumns = function () {
+export const createJobTaskColumns = function ({ showJobDetail }) {
   const { t } = useI18n();
   const columns = [
     {
@@ -167,8 +167,24 @@ export const createJobTaskColumns = function () {
     },
     {
       title: t('task.jobId'),
-      key: 'jobId',
-      width: 80
+      key: '_jobId',
+      width: 80,
+      render(row) {
+        if (showJobDetail !== undefined) {
+          return (
+            <NButton
+              size="tiny"
+              quaternary
+              type="info"
+              onClick={() => showJobDetail(row.jobId)}
+            >
+              {row.jobId}
+            </NButton>
+          );
+        } else {
+          return <span>{row.jobId}</span>;
+        }
+      }
     },
     {
       title: t('task.triggerTime'),

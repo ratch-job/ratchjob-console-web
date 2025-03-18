@@ -24,11 +24,33 @@
         />
       </div>
     </div>
+    <n-drawer
+      to="#main_content"
+      :block-scroll="false"
+      :trap-focus="false"
+      v-model:show="useForm"
+      default-width="600"
+      resizable
+    >
+      <n-drawer-content :title="jobDetailTitle" closable>
+        <JobDetail :model="modelRef" :appList="[]" />
+        <template #footer>
+          <n-space align="baseline">
+            <n-button text @click="closeForm">{{
+              t('common.return')
+            }}</n-button>
+            <n-button type="primary" @click="submitForm">{{
+              t('common.confirm')
+            }}</n-button>
+          </n-space>
+        </template>
+      </n-drawer-content>
+    </n-drawer>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 //import { createJobTaskColumns } from '@/pages/JobPage/JobTaskColumns.jsx';
 import { createJobTaskColumns } from '@/pages/JobPage/JobColumns.jsx';
@@ -39,8 +61,36 @@ import {
   printApiSuccess,
   printApiError
 } from '@/utils/request';
+import SubContentPage from '@/components/common/SubContentPage.jsx';
+import JobDetail from '@/pages/JobPage/JobDetail.vue';
+import * as constant from '@/types/constant';
 
 const { t } = useI18n();
+
+const defaultModel = {
+  id: 0,
+  appName: '',
+  enable: true,
+  namespace: '',
+  description: '',
+  scheduleType: '',
+  cronValue: '',
+  delaySecond: 0,
+  intervalSecond: 0,
+  runMode: '',
+  handleName: '',
+  triggerParam: '',
+  routerStrategy: '',
+  pastDueStrategy: '',
+  blockingStrategy: '',
+  timeoutSecond: 0,
+  tryTimes: 0,
+  mode: constant.FORM_MODE_DETAIL
+};
+
+const modelRef = ref({ ...defaultModel });
+
+const useForm = ref(false);
 
 const loadingRef = ref(false);
 
@@ -99,7 +149,47 @@ const queryList = function () {
   doHandlePageChange(1);
 };
 
-const columns = createJobTaskColumns();
+const jobDetailTitle = computed(function () {
+  if (modelRef.value.mode === constant.FORM_MODE_UPDATE) {
+    return t('job._name') + t('common.join') + t('common.edit');
+  } else if (modelRef.value.mode === constant.FORM_MODE_CREATE) {
+    return t('job._name') + t('common.join') + t('common.create');
+  }
+  return t('job._name') + t('common.join') + t('common.detail');
+});
+
+const closeForm = function () {
+  useForm.value = false;
+};
+
+const submitForm = function () {
+  if (modelRef.value.mode === constant.FORM_MODE_DETAIL) {
+    useForm.value = false;
+    return;
+  }
+  useForm.value = false;
+};
+
+const showJobDetail = function (jobId) {
+  jobApi
+    .getJobInfo({
+      id: jobId
+    })
+    .then(handleApiResult)
+    .then((row) => {
+      if (row == null) {
+        printApiError({ message: 'Job not found!' });
+        return;
+      }
+      modelRef.value = {
+        mode: constant.FORM_MODE_DETAIL,
+        ...row
+      };
+      useForm.value = true;
+    });
+};
+
+const columns = createJobTaskColumns({ showJobDetail });
 
 onMounted(() => {
   namespaceStore.initLoad();
@@ -142,7 +232,7 @@ onMounted(() => {
 .title {
   flex: 1 1 auto;
   font: 14/1.25;
-  line-height: 30px;
+  line-height: 40px;
   padding-left: 15px;
 }
 

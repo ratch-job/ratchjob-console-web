@@ -130,7 +130,7 @@ const queryList = function () {
   doHandlePageChange(1);
 };
 
-const columns = createJobTaskColumns();
+const columns = createJobTaskColumns({});
 
 onMounted(() => {
   namespaceStore.initLoad();
@@ -173,7 +173,7 @@ onMounted(() => {
 .title {
   flex: 1 1 auto;
   font: 14/1.25;
-  line-height: 30px;
+  line-height: 40px;
   padding-left: 15px;
 }
 

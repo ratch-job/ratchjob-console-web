@@ -13,6 +13,7 @@ const message = {
     back: '返回',
     confirm_action: '是否确认操作?',
     delete: '删除',
+    create: '创建',
     edit: '编辑',
     detail: '详情',
     history: '历史记录',
@@ -87,6 +88,7 @@ const message = {
     confirm_delete_action: '确认要删应用名为<%:=appName%>的应用吗？'
   },
   job: {
+    _name: '任务',
     id: '任务ID',
     appName: '应用名称',
     description: '任务描述',

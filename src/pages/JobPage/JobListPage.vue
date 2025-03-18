@@ -83,7 +83,7 @@
     </div>
     <SubContentFullPage
       v-show="useForm"
-      :title="getDetailTitle"
+      :title="detailTitle"
       @close="closeForm"
       @submit="submitForm"
     >
@@ -93,7 +93,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { createColumns } from '@/pages/JobPage/JobColumns.jsx';
 import { useWebResources } from '@/data/resources';
@@ -180,7 +180,7 @@ const queryPage = function (pageNo) {
     namespace: namespaceStore.current.value.namespaceId,
     appName: param.value.appName,
     likeDescription: param.value.description,
-    likeHandleName: param.value.description,
+    likeHandleName: param.value.handleName,
     pageNo: pageNo,
     pageSize: pagination.pageSize
   });
@@ -269,6 +269,15 @@ const showDetail = function (row) {
   };
   useForm.value = true;
 };
+
+const detailTitle = computed(function () {
+  if (modelRef.value.mode === constant.FORM_MODE_UPDATE) {
+    return t('job._name') + t('common.join') + t('common.edit');
+  } else if (modelRef.value.mode === constant.FORM_MODE_CREATE) {
+    return t('job._name') + t('common.join') + t('common.create');
+  }
+  return t('job._name') + t('common.join') + t('common.detail');
+});
 
 const closeForm = function () {
   useForm.value = false;

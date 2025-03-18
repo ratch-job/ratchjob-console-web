@@ -13,6 +13,7 @@ const message = {
     back: 'Back',
     confirm_action: 'Do you want to confirm the action?',
     delete: 'Delete',
+    create: 'Create',
     edit: 'Edit',
     detail: 'Detail',
     history: 'History',
@@ -88,6 +89,7 @@ const message = {
       'Are you sure you want to delete the application named <%:=appName%>?'
   },
   job: {
+    _name: 'Job',
     id: 'JobID',
     appName: 'app name',
     description: 'job description',
