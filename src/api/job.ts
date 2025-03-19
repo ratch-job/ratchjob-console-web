@@ -26,7 +26,7 @@ export interface IJobInfoParam {
 
 export interface ITriggerJobParam {
   jobId: number;
-  instance_addr: string;
+  instanceAddr: string;
 }
 
 export interface IJobInfoParam {

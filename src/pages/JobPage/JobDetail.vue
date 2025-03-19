@@ -41,12 +41,19 @@
             path="cronValue"
             :label="t('job.cronValue')"
           >
-            <n-input
-              :disabled="isReadonly"
-              :placeholder="t('job.cronValue')"
-              v-model:value="model.cronValue"
-              @keydown.enter.prevent
-            />
+            <n-input-group>
+              <n-input
+                :disabled="isReadonly"
+                :placeholder="t('job.cronValue')"
+                v-model:value="model.cronValue"
+                @keydown.enter.prevent
+              />
+              <n-button ghost @click="cronPlan">
+                <template #icon>
+                  <n-icon><Eye /></n-icon>
+                </template>
+              </n-button>
+            </n-input-group>
           </n-form-item>
           <n-form-item
             v-if="isDelay"
@@ -55,7 +62,6 @@
           >
             <n-input-number
               :disabled="isReadonly"
-              :placeholder="t('job.delaySecond')"
               v-model:value="model.delaySecond"
               @keydown.enter.prevent
             />
@@ -67,9 +73,8 @@
           >
             <n-input-number
               :disabled="isReadonly"
-              :placeholder="t('job.intervalSecond')"
               v-model:value="model.intervalSecond"
-              @keydown.enter.prevent
+              style="width: 100%"
             />
           </n-form-item>
         </n-gi>
@@ -149,6 +154,7 @@
               :disabled="isReadonly"
               :placeholder="t('job.timeoutSecond')"
               v-model:value="model.timeoutSecond"
+              style="width: 100%"
               @keydown.enter.prevent
             />
           </n-form-item>
@@ -159,6 +165,7 @@
               :disabled="isReadonly"
               :placeholder="t('job.tryTimes')"
               v-model:value="model.tryTimes"
+              style="width: 100%"
               @keydown.enter.prevent
             />
           </n-form-item>
@@ -170,13 +177,32 @@
         </n-gi>
       </n-grid>
     </n-form>
+    <n-modal v-model:show="showCronPlan">
+      <n-card
+        style="width: 220px"
+        title="最近计划"
+        :bordered="false"
+        role="dialog"
+        aria-modal="true"
+      >
+        <ul>
+          <!-- 使用 v-for 循环渲染数组 -->
+          <li v-for="(item, index) in cronPlanItems" :key="index">
+            {{ item }}
+          </li>
+        </ul>
+      </n-card>
+    </n-modal>
   </div>
 </template>
 
 <script setup>
-import { computed, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import * as constant from '@/types/constant';
+import { toDatetime } from '@/utils/date';
+import { CronExpressionParser } from 'cron-parser';
+import { Eye } from '@vicons/ionicons5';
 import {
   ScheduleTypeOptions,
   JobRunModeOptions,
@@ -185,11 +211,50 @@ import {
   ExecutorBlockStrategyOptions
 } from './SeleteType.js';
 
+const showCronPlan = ref(false);
+const cronPlanItems = ref([]);
+
 // Props
 const props = defineProps({
   model: Object,
   appList: Object
 });
+
+function getNextCronExecutions(cronExpression, count = 5) {
+  try {
+    // 创建一个解析器选项对象
+    const options = {
+      currentDate: new Date(), // 当前时间为起始点
+      iterator: true // 启用迭代器模式
+    };
+
+    // 解析 cron 表达式
+    const interval = CronExpressionParser.parse(cronExpression, options);
+
+    const executions = [];
+
+    // 获取未来 count 次的执行时间
+    for (let i = 0; i < count; i++) {
+      const next = interval.next(); // 获取下一次执行时间
+      if (next) {
+        executions.push(toDatetime(next.toDate())); // 转换为 JavaScript Date 对象
+      } else {
+        break; // 如果没有更多执行时间，则退出循环
+      }
+    }
+
+    return executions;
+  } catch (error) {
+    console.error('Error parsing cron expression:', error.message);
+    return [];
+  }
+}
+
+const cronPlan = function () {
+  let items = getNextCronExecutions(props.model.cronValue, 5);
+  cronPlanItems.value = items;
+  showCronPlan.value = true;
+};
 
 //console.log('JobDetail model', props.model);
 

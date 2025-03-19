@@ -11,6 +11,7 @@ export const createColumns = function ({
   showClone,
   remove,
   trigger,
+  showTrigger,
   webResources
 }) {
   const { t } = useI18n();
@@ -76,6 +77,7 @@ export const createColumns = function ({
         let removePopconfirm;
         let cloneButton;
         let triggerPopconfirm;
+        let triggerButton;
         editButton = (
           <NButton
             size="tiny"
@@ -96,6 +98,7 @@ export const createColumns = function ({
             {t('common.clone')}
           </NButton>
         );
+        /*
         triggerPopconfirm = (
           <NPopconfirm
             onPositiveClick={() => trigger(row)}
@@ -107,6 +110,17 @@ export const createColumns = function ({
               })}
             </span>
           </NPopconfirm>
+        );
+         */
+        triggerButton = (
+          <NButton
+            size="tiny"
+            quaternary
+            type="error"
+            onClick={() => showTrigger(row)}
+          >
+            {t('common.trigger')}
+          </NButton>
         );
         removePopconfirm = (
           <NPopconfirm
@@ -147,7 +161,7 @@ export const createColumns = function ({
             </NButton>
             {editButton}
             {cloneButton}
-            {triggerPopconfirm}
+            {triggerButton}
             {removePopconfirm}
           </div>
         );

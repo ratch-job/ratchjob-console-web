@@ -89,6 +89,29 @@
     >
       <JobDetail :model="modelRef" :appList="appList" />
     </SubContentFullPage>
+    <n-modal
+      v-model:show="showTriggerModal"
+      preset="dialog"
+      title="确认"
+      content="你确认?"
+      positive-text="确认"
+      negative-text="算了"
+      @positive-click="submitTrigger"
+      @negative-click="cancelTrigger"
+    >
+      <n-card
+        style="width: 300px"
+        title="触发任务"
+        :bordered="false"
+        role="dialog"
+        aria-modal="true"
+      >
+        <n-select
+          v-model:value="triggerAddrValue"
+          :options="triggerInstanceAddrs"
+        />
+      </n-card>
+    </n-modal>
   </div>
 </template>
 
@@ -146,6 +169,11 @@ const useForm = ref(false);
 const modelRef = ref({ ...defaultModel });
 
 const dataRef = ref([]);
+
+const triggerInstanceAddrs = ref([]);
+const triggerJobId = ref(null);
+const triggerAddrValue = ref('');
+const showTriggerModal = ref(false);
 
 const defaultApp = {
   value: '',
@@ -252,10 +280,60 @@ const remove = function (row) {
     .catch(printApiError);
 };
 
+const showTrigger = function (row) {
+  appApi
+    .getAppInfo({
+      namespace: row.namespaceId,
+      appName: row.appName
+    })
+    .then(handleApiResult)
+    .then((obj) => {
+      let instanceAddrs = obj.instanceAddrs;
+      let items = [
+        {
+          value: '',
+          label: 'Auto'
+        }
+      ];
+      for (const item of instanceAddrs) {
+        items.push({
+          value: item,
+          label: item
+        });
+      }
+      return items;
+    })
+    .then((items) => {
+      triggerJobId.value = row.id;
+      triggerInstanceAddrs.value = items;
+      triggerAddrValue.value = '';
+      showTriggerModal.value = true;
+    })
+    .catch(printApiError);
+};
+
+const submitTrigger = function () {
+  jobApi
+    .triggerJob({
+      jobId: triggerJobId.value
+    })
+    .then(handleApiResult)
+    .then(() => {
+      showTriggerModal.value = false;
+    })
+    .then(printApiSuccess)
+    .catch(printApiError);
+};
+
+const cancelTrigger = function () {
+  showTriggerModal.value = false;
+};
+
 const trigger = function (row) {
   jobApi
     .triggerJob({
-      jobId: row.id
+      jobId: row.id,
+      instanceAddr: triggerAddrValue.value
     })
     .then(handleApiResult)
     .then(printApiSuccess)
@@ -351,6 +429,7 @@ const columns = createColumns({
   showDetail,
   remove,
   trigger,
+  showTrigger,
   webResources
 });
 
