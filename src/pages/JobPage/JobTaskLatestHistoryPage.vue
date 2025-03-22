@@ -178,7 +178,7 @@ const showJobDetail = function (jobId) {
     .then(handleApiResult)
     .then((row) => {
       if (row == null) {
-        printApiError({ message: 'Job not found!' });
+        printApiError({ message: '找不到任务' });
         return;
       }
       modelRef.value = {

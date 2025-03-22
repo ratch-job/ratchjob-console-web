@@ -99,18 +99,13 @@
       @positive-click="submitTrigger"
       @negative-click="cancelTrigger"
     >
-      <n-card
-        style="width: 300px"
-        title="触发任务"
-        :bordered="false"
-        role="dialog"
-        aria-modal="true"
-      >
+      <div>
+        <div>选择执行机器</div>
         <n-select
-          v-model:value="triggerAddrValue"
+          v-model:value="triggerValue.instanceAddr"
           :options="triggerInstanceAddrs"
         />
-      </n-card>
+      </div>
     </n-modal>
   </div>
 </template>
@@ -160,6 +155,7 @@ const defaultModel = {
   blockingStrategy: '',
   timeoutSecond: 0,
   tryTimes: 0,
+  retryInterval: 0,
   mode: constant.FORM_MODE_CREATE
 };
 
@@ -171,8 +167,10 @@ const modelRef = ref({ ...defaultModel });
 const dataRef = ref([]);
 
 const triggerInstanceAddrs = ref([]);
-const triggerJobId = ref(null);
-const triggerAddrValue = ref('');
+const triggerValue = ref({
+  id: 0,
+  instanceAddr: ''
+});
 const showTriggerModal = ref(false);
 
 const defaultApp = {
@@ -304,9 +302,11 @@ const showTrigger = function (row) {
       return items;
     })
     .then((items) => {
-      triggerJobId.value = row.id;
+      triggerValue.value = {
+        id: row.id,
+        instanceAddr: ''
+      };
       triggerInstanceAddrs.value = items;
-      triggerAddrValue.value = '';
       showTriggerModal.value = true;
     })
     .catch(printApiError);
@@ -315,7 +315,8 @@ const showTrigger = function (row) {
 const submitTrigger = function () {
   jobApi
     .triggerJob({
-      jobId: triggerJobId.value
+      jobId: triggerValue.value.id,
+      instanceAddr: triggerValue.value.instanceAddr
     })
     .then(handleApiResult)
     .then(() => {
@@ -332,8 +333,7 @@ const cancelTrigger = function () {
 const trigger = function (row) {
   jobApi
     .triggerJob({
-      jobId: row.id,
-      instanceAddr: triggerAddrValue.value
+      jobId: row.id
     })
     .then(handleApiResult)
     .then(printApiSuccess)
@@ -384,7 +384,8 @@ const submitForm = function () {
     pastDueStrategy: modelRef.value.pastDueStrategy,
     blockingStrategy: modelRef.value.blockingStrategy,
     timeoutSecond: modelRef.value.timeoutSecond,
-    tryTimes: modelRef.value.tryTimes
+    tryTimes: modelRef.value.tryTimes,
+    retryInterval: modelRef.value.retryInterval
   };
   let api =
     modelRef.value.mode === constant.FORM_MODE_CREATE

@@ -22,6 +22,7 @@ export interface IJobInfoParam {
   blockingStrategy?: string;
   timeoutSecond?: number;
   tryTimes?: number;
+  retryInterval?: number;
 }
 
 export interface ITriggerJobParam {
@@ -54,6 +55,7 @@ export interface IJobInfo {
   versionId: number;
   lastModifiedMillis: number;
   registerTime: number;
+  retryInterval: number;
 }
 
 export interface IJobPageParam {

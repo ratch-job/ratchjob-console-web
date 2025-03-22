@@ -48,8 +48,15 @@ export const createColumns = function ({
       key: 'scheduleType'
     },
     {
-      title: t('job.cronValue'),
-      key: 'cronValue'
+      title: t('job.scheduleParam'),
+      key: 'scheduleParam',
+      render(row) {
+        let value = row.cronValue;
+        if (row.scheduleType === 'INTERVAL') {
+          value = row.intervalSecond;
+        }
+        return <span>{value}</span>;
+      }
     },
     {
       title: t('job.enableStatus'),

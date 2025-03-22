@@ -171,6 +171,19 @@
           </n-form-item>
         </n-gi>
         <n-gi>
+          <n-form-item path="retryInterval" :label="t('job.retryInterval')">
+            <n-input-number
+              :disabled="isReadonly"
+              :placeholder="t('job.retryInterval')"
+              v-model:value="model.retryInterval"
+              style="width: 100%"
+              @keydown.enter.prevent
+            />
+          </n-form-item>
+        </n-gi>
+      </n-grid>
+      <n-grid :cols="3" :x-gap="12">
+        <n-gi>
           <n-form-item path="enable" :label="t('job.enableStatus')">
             <n-switch :disabled="isReadonly" v-model:value="model.enable" />
           </n-form-item>

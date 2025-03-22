@@ -94,6 +94,7 @@ const message = {
     appName: 'app name',
     description: 'job description',
     scheduleType: 'schedule type',
+    scheduleParam: 'schedule param',
     cronValue: 'cron value',
     delaySecond: 'delay second',
     intervalSecond: 'interval second',
@@ -105,6 +106,7 @@ const message = {
     blockingStrategy: 'blocking strategy',
     timeoutSecond: 'timeout second',
     tryTimes: 'try times',
+    retryInterval: 'retry interval',
     confirm_delete_action:
       'Are you sure you want to delete the task whose id is <%:=id%>?',
     confirm_trigger_action:
