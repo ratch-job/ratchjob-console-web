@@ -234,7 +234,7 @@ export const createJobTaskColumns = function ({ showJobDetail }) {
         let tagType = 'info';
         if (value === 'SUCCESS') {
           tagType = 'success';
-        } else if (value === 'ERROR') {
+        } else if (value === 'ERROR' || value === 'FAIL') {
           tagType = 'error';
         } else if (value === 'RUNNING') {
           tagType = 'warning';

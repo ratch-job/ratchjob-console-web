@@ -112,6 +112,52 @@ const charList = [
       }
     ]
   },
+  {
+    id: 'job_size',
+    title: t('monitor.job_size'),
+    series: [
+      {
+        name: t('monitor.job_size'),
+        key: 'job_size'
+      },
+      {
+        name: t('monitor.job_enable_size'),
+        key: 'job_enable_size'
+      }
+    ]
+  },
+  {
+    id: 'task_trigger_size',
+    title: t('monitor.task_trigger_size'),
+    series: [
+      {
+        name: t('monitor.task_trigger_size'),
+        key: 'task_trigger_size'
+      },
+      {
+        name: t('monitor.task_redo_size'),
+        key: 'task_redo_size'
+      }
+    ]
+  },
+  {
+    id: 'task_status_size',
+    title: t('monitor.task_status_size'),
+    series: [
+      {
+        name: t('monitor.task_success_size'),
+        key: 'task_success_size'
+      },
+      {
+        name: t('monitor.task_fail_size'),
+        key: 'task_fail_size'
+      },
+      {
+        name: t('monitor.task_running_size'),
+        key: 'task_running_size'
+      }
+    ]
+  },
 
   {
     id: 'http_request_rps',
@@ -161,6 +207,20 @@ const charList = [
       }
     ]
   }
+  /*
+  {
+    id: 'task_finish_rt_summary',
+    title: t('monitor.task_finish_rt_summary'),
+    series: [
+      {
+        name: t('monitor.task_finish_rt_summary'),
+        key: 'task_finish_rt_summary',
+        keyType: 'summary',
+        subType: null
+      }
+    ]
+  }
+  */
 ];
 
 const viewGroup = [
