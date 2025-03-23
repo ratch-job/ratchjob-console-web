@@ -79,6 +79,29 @@ const message = {
     version_title: 'System version',
     user_title: 'Current user'
   },
+  monitor: {
+    system_monitor: 'System Monitor',
+    service_node: 'Service Node',
+    interval_type: 'Interval Type',
+    auto_refresh: 'Auto Refresh',
+    app_cpu_usage: 'Cpu Usage',
+    app_cpu_usage_percent: 'Cpu Usage Percent(%)',
+    app_memory_usage: 'Memory Usage',
+    app_memory_usage_percent: 'Memory Usage Percent(%)',
+    app_rss_memory: 'RSS Memory',
+    app_rss_memory_m: 'RSS Memory(M)',
+    http_request_rps: 'http request rps',
+    http_request_count: 'http request count',
+    http_request_rt: 'http request avg time',
+    http_request_rt_ms: 'http request avg time(ms)',
+    http_request_handle_rt_summary: 'http request avg handle time',
+    http_request_handle_rt_summary_percent_ms:
+      'http request avg handle time percent(ms)',
+    LEAST: 'LEAST',
+    MINUTE: 'MINUTE',
+    HOUR: 'HOUR',
+    DIRECT_NODE: 'DIRECT NODE'
+  },
   app: {
     name: 'app name',
     label: 'app label',
@@ -113,6 +136,7 @@ const message = {
       'Are you sure you want to trigger the task with id <%:=id%>?',
     task_list: 'Task list',
     enableStatus: 'EnableStatus',
+    select_executor: 'Select executor',
     types: {
       scheduleType: {
         none: 'None',

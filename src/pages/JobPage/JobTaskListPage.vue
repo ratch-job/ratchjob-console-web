@@ -27,6 +27,11 @@
           </n-form>
           <div class="queryButton">
             <span class="query-button-item">
+              <n-button type="info" @click="routerBack">{{
+                t('common.back')
+              }}</n-button>
+            </span>
+            <span class="query-button-item">
               <n-button tertiary @click="queryList">{{
                 t('common.query')
               }}</n-button>
@@ -56,7 +61,7 @@ import { useI18n } from 'vue-i18n';
 //import { createJobTaskColumns } from '@/pages/JobPage/JobTaskColumns.jsx';
 import { createJobTaskColumns } from '@/pages/JobPage/JobColumns.jsx';
 import { namespaceStore } from '@/data/namespace';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { jobApi } from '@/api/job';
 import {
   handleApiResult,
@@ -67,6 +72,7 @@ import {
 const { t } = useI18n();
 
 let route = useRoute();
+let router = useRouter();
 
 const param = ref({
   jobId: route.query.jobId || '0'
@@ -128,6 +134,10 @@ const doHandlePageChange = function (currentPage) {
 
 const queryList = function () {
   doHandlePageChange(1);
+};
+
+const routerBack = function () {
+  router.go(-1);
 };
 
 const columns = createJobTaskColumns({});

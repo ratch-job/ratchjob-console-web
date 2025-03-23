@@ -92,15 +92,15 @@
     <n-modal
       v-model:show="showTriggerModal"
       preset="dialog"
-      title="确认"
-      content="你确认?"
-      positive-text="确认"
-      negative-text="算了"
+      :title="t('common.confirm')"
+      content=""
+      :positive-text="t('common.confirm')"
+      :negative-text="t('common.return')"
       @positive-click="submitTrigger"
       @negative-click="cancelTrigger"
     >
       <div>
-        <div>选择执行机器</div>
+        <div>{{ t('job.select_executor') }}</div>
         <n-select
           v-model:value="triggerValue.instanceAddr"
           :options="triggerInstanceAddrs"

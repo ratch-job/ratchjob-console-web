@@ -79,6 +79,28 @@ const message = {
     version_title: '系统版本号',
     user_title: '当前用户'
   },
+  monitor: {
+    system_monitor: '系统监控',
+    service_node: '服务节点',
+    interval_type: '视图间隔类型',
+    auto_refresh: '自动刷新',
+    app_cpu_usage: 'CPU使用率',
+    app_cpu_usage_percent: 'CPU使用率-单核占比(%)',
+    app_memory_usage: '内存使用率',
+    app_memory_usage_percent: '内存使用率(%)',
+    app_rss_memory: 'RSS 内存',
+    app_rss_memory_m: 'RSS 内存(M)',
+    http_request_rps: 'http请求rps',
+    http_request_count: 'http请求数量',
+    http_request_rt: 'http请求平均处理时长',
+    http_request_rt_ms: 'http请求平均处理时长(ms)',
+    http_request_handle_rt_summary: 'http请求处理时长统计',
+    http_request_handle_rt_summary_percent_ms: 'http请求处理时长百分位统计(ms)',
+    LEAST: '最小间隔',
+    MINUTE: '分钟',
+    HOUR: '小时',
+    DIRECT_NODE: '直连节点'
+  },
   app: {
     name: '应用名称',
     label: '应用标签',
@@ -110,6 +132,7 @@ const message = {
     confirm_trigger_action: '确认要触发id为<%:=id%>的任务吗？',
     task_list: '执行实例',
     enableStatus: '启动状态',
+    select_executor: '选择执行机器',
     types: {
       scheduleType: {
         none: '无',

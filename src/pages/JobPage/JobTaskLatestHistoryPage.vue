@@ -10,6 +10,18 @@
     </div>
     <div class="content-wrap">
       <div class="form-container">
+        <div class="query-params">
+          <n-form label-placement="left" label-width="auto">
+            <div class="paramWrap"></div>
+          </n-form>
+          <div class="queryButton">
+            <span class="query-button-item">
+              <n-button tertiary @click="queryList">{{
+                t('common.refresh')
+              }}</n-button>
+            </span>
+          </div>
+        </div>
         <n-data-table
           remote
           ref="table"
@@ -250,6 +262,7 @@ onMounted(() => {
   align-items: baseline;
   justify-content: space-between;
   flex-direction: row;
+  margin-bottom: 10px;
 }
 
 .paramWrap {

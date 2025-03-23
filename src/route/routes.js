@@ -62,6 +62,12 @@ export const routes = [
         name: 'manage about',
         meta: { title: t('menu.about') },
         component: About
+      },
+      {
+        path: '/manage/appmonitor',
+        name: 'monitor',
+        meta: { title: t('menu.system_monitor') },
+        component: () => import('@/pages/AppMonitor.vue')
       }
     ]
   }
@@ -112,6 +118,10 @@ export const sideAllMenu = [
     name: t('menu.system_management'),
     icon: markRaw(AppsSharp),
     children: [
+      {
+        name: t('menu.system_monitor'),
+        path: '/manage/appmonitor'
+      },
       {
         name: t('menu.about'),
         path: '/manage/about'
