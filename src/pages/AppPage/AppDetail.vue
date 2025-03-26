@@ -18,9 +18,11 @@
         />
       </n-form-item>
       <n-form-item path="instanceAddrs" :label="t('app.instanceAddrs')">
-        <ul class="addr-group" v-for="item in model.instanceAddrs">
-          <li class="addr-item">{{ item }}</li>
-        </ul>
+        <div class="addr-group">
+          <div class="addr-item" v-for="item in model.instanceAddrs">
+            {{ item }}
+          </div>
+        </div>
       </n-form-item>
     </n-form>
   </div>
@@ -68,10 +70,12 @@ const { t } = useI18n();
   padding: 3px;
   border-radius: 5px;
 }
+
 .addr-group {
   list-style-type: none; /* 去掉默认的列表样式 */
   padding: 0; /* 去掉默认的内边距 */
   margin: 0; /* 去掉默认的外边距 */
+  display: block;
 }
 
 .addr-item {
