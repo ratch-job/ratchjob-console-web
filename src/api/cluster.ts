@@ -8,7 +8,6 @@ export interface IClusterNode {
   addr: string;
   currentNode: boolean;
   raftLeader: boolean;
-  distroValid: boolean;
 }
 
 class ClusterApi {

@@ -60,6 +60,7 @@ const message = {
     task_latest_list: '最近任务执行记录',
     system_management: '系统管理',
     system_monitor: '系统监控',
+    cluster_info: '集群信息',
     about: '关于'
   },
   namespace: {
@@ -78,6 +79,12 @@ const message = {
     intro_title: '系统简介',
     version_title: '系统版本号',
     user_title: '当前用户'
+  },
+  cluster: {
+    node: '节点',
+    address: '地址',
+    masternode: '主节点',
+    cluster_info: '集群信息'
   },
   monitor: {
     system_monitor: '系统监控',
@@ -98,11 +105,13 @@ const message = {
     http_request_handle_rt_summary_percent_ms: 'http请求处理时长百分位统计(ms)',
     job_size: '任务数量',
     job_enable_size: '启用任务数量',
-    task_trigger_size: '任务实例触发数量',
-    task_redo_size: '任务实例重试数量',
+    task_trigger_size: '任务触发数量',
+    task_trigger_rps: '任务实例触发rps',
+    task_redo_size: '任务重试数量',
     task_status_size: '任务实例状态数量',
     task_success_size: '成功数量',
     task_fail_size: '失败数量',
+    task_pending_size: '待调用数量',
     task_running_size: '运行中数量',
     LEAST: '最小间隔',
     MINUTE: '分钟',
@@ -186,6 +195,7 @@ const message = {
     triggerMessage: '触发消息',
     status: '状态',
     finishTime: '完成时间',
+    retryCount: '已重试次数',
     callbackMessage: '回调消息'
   },
   error: {

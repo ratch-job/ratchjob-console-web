@@ -59,6 +59,7 @@ const message = {
     task_latest_list: 'LatestTaskList',
     system_management: 'System',
     system_monitor: 'Monitor',
+    cluster_info: 'Cluster Info',
     about: 'About'
   },
   namespace: {
@@ -78,6 +79,12 @@ const message = {
     intro_title: 'System introduction',
     version_title: 'System version',
     user_title: 'Current user'
+  },
+  cluster: {
+    node: 'Node',
+    address: 'Address',
+    masternode: 'Master Node',
+    cluster_info: 'Cluster Info'
   },
   monitor: {
     system_monitor: 'System Monitor',
@@ -99,12 +106,14 @@ const message = {
       'http request avg handle time percent(ms)',
     job_size: 'Number of jobs',
     job_enable_size: 'Number of enabled jobs',
-    task_trigger_size: 'Number of task instances triggered',
-    task_redo_size: 'Number of task instance retries',
-    task_status_size: 'Number of task instance statuses',
-    task_success_size: 'Number of successes ',
-    task_fail_size: 'Number of failures',
-    task_running_size: 'Number of running tasks',
+    task_trigger_rps: 'Task trigger rps',
+    task_trigger_size: 'Task trigger count',
+    task_redo_size: 'Task retries count',
+    task_status_size: 'Task instance statuses',
+    task_success_size: 'Success count',
+    task_fail_size: 'Failures count',
+    task_pending_size: 'Waiting call count',
+    task_running_size: 'Running count',
     LEAST: 'LEAST',
     MINUTE: 'MINUTE',
     HOUR: 'HOUR',
@@ -190,6 +199,7 @@ const message = {
     triggerMessage: 'TriggerMessage',
     status: 'Status',
     finishTime: 'FinishTime',
+    retryCount: 'RetryCount',
     callbackMessage: 'CallbackMessage'
   },
   error: {

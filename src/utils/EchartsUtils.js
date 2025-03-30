@@ -287,6 +287,13 @@ export class ChartViewManager {
             //return null;
           }
         }
+      } else if (serie.keyType == 'rps') {
+        let obj = data.gaugeData[key] || [];
+        let list = [];
+        for (var v of obj) {
+          list.push(v / (data.intervalSecond || 1));
+        }
+        dataList.push(list);
       } else {
         let obj = data.gaugeData[key] || [];
         dataList.push(obj);

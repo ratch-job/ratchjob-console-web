@@ -260,6 +260,11 @@ export const createJobTaskColumns = function ({ showJobDetail }) {
       }
     },
     {
+      title: t('task.retryCount'),
+      key: 'retryCount',
+      width: 100
+    },
+    {
       title: t('task.triggerMessage'),
       key: 'triggerMessage',
       width: 200

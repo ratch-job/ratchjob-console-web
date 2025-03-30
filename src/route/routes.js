@@ -1,6 +1,5 @@
 import MainLayout from '@/components/layout/MainLayout.vue';
 import NotFound from '@/pages/NotFound.vue';
-import Tmp from '@/pages/Tmp.vue';
 import About from '@/pages/About.vue';
 import Index from '@/pages/IndexPage/Index.vue';
 import AppListPage from '@/pages/AppPage/AppListPage.vue';
@@ -9,6 +8,7 @@ import JobTaskListPage from '@/pages/JobPage/JobTaskListPage.vue';
 import JobTaskLatestHistoryPage from '@/pages/JobPage/JobTaskLatestHistoryPage.vue';
 import { AppsSharp, List, HomeSharp } from '@vicons/ionicons5';
 import { getMessage as t } from '@/i18n';
+import ClusterPage from '@/pages/ClusterPage/ClusterPage.vue';
 
 export const routes = [
   {
@@ -62,6 +62,12 @@ export const routes = [
         name: 'manage about',
         meta: { title: t('menu.about') },
         component: About
+      },
+      {
+        path: '/manage/cluster',
+        name: 'cluster',
+        meta: { title: t('menu.cluster_info') },
+        component: ClusterPage
       },
       {
         path: '/manage/appmonitor',
@@ -118,6 +124,10 @@ export const sideAllMenu = [
     name: t('menu.system_management'),
     icon: markRaw(AppsSharp),
     children: [
+      {
+        name: t('menu.cluster_info'),
+        path: '/manage/cluster'
+      },
       {
         name: t('menu.system_monitor'),
         path: '/manage/appmonitor'

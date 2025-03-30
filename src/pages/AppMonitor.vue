@@ -127,16 +127,13 @@ const charList = [
     ]
   },
   {
-    id: 'task_trigger_size',
-    title: t('monitor.task_trigger_size'),
+    id: 'task_trigger_rps',
+    title: t('monitor.task_trigger_rps'),
     series: [
       {
-        name: t('monitor.task_trigger_size'),
+        name: t('monitor.task_trigger_rps'),
+        keyType: 'rps',
         key: 'task_trigger_size'
-      },
-      {
-        name: t('monitor.task_redo_size'),
-        key: 'task_redo_size'
       }
     ]
   },
@@ -145,6 +142,14 @@ const charList = [
     title: t('monitor.task_status_size'),
     series: [
       {
+        name: t('monitor.task_trigger_size'),
+        key: 'task_trigger_size'
+      },
+      {
+        name: t('monitor.task_redo_size'),
+        key: 'task_redo_size'
+      },
+      {
         name: t('monitor.task_success_size'),
         key: 'task_success_size'
       },
@@ -152,6 +157,12 @@ const charList = [
         name: t('monitor.task_fail_size'),
         key: 'task_fail_size'
       },
+      /*
+      {
+        name: t('monitor.task_pending_size'),
+        key: 'task_pending_size'
+      },
+       */
       {
         name: t('monitor.task_running_size'),
         key: 'task_running_size'
