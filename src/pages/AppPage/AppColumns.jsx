@@ -29,6 +29,21 @@ export const createColumns = function ({
       key: 'label'
     },
     {
+      title: t('app.registerType'),
+      key: '_registerType',
+      render(row) {
+        if (row.registerType == 'MANUAL') {
+          return <span>{t('app.manualRegister')}</span>;
+        } else {
+          return <span>{t('app.autoRegister')}</span>;
+        }
+      }
+    },
+    {
+      title: t('app.instanceCount'),
+      key: 'instanceCount'
+    },
+    {
       title: t('common.operation'),
       key: 'type',
       fixed: 'right',

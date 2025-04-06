@@ -20,6 +20,7 @@ const message = {
     operation: 'Operation',
     clone: 'Clone',
     trigger: 'Trigger',
+    empty: 'Empty',
     updatedtime: 'Updated Time',
     recover: 'Recover',
     request_fail: 'Request Fail',
@@ -124,7 +125,13 @@ const message = {
     label: 'app label',
     inputName: 'input app name',
     searchName: 'search app name(support fuzzy query)',
+    emptyAddrs: 'empty address',
+    instanceAddr: 'instance address',
     instanceAddrs: 'instance address list',
+    instanceCount: 'instance count',
+    registerType: 'register type',
+    autoRegister: 'auto register',
+    manualRegister: 'manual register',
     confirm_delete_action:
       'Are you sure you want to delete the application named <%:=appName%>?'
   },

@@ -17,10 +17,38 @@
           @keydown.enter.prevent
         />
       </n-form-item>
+      <n-form-item path="registerType" :label="t('app.registerType')">
+        <n-radio-group
+          :disabled="isReadonly"
+          v-model:value="model.registerType"
+          name="registerType"
+        >
+          <n-space>
+            <n-radio
+              v-for="item in registerTypes"
+              :key="item.value"
+              :value="item.value"
+            >
+              {{ item.label }}
+            </n-radio>
+          </n-space>
+        </n-radio-group>
+      </n-form-item>
       <n-form-item path="instanceAddrs" :label="t('app.instanceAddrs')">
         <div class="addr-group">
-          <div class="addr-item" v-for="item in model.instanceAddrs">
-            {{ item }}
+          <n-dynamic-input
+            :disabled="isReadonly || isAutoRegister"
+            v-model:value="model.instanceAddrs"
+            :placeholder="t('app.instanceAddr')"
+          />
+          <div class="addr-btn">
+            <n-button
+              v-show="!isAutoRegister"
+              :disabled="isReadonly"
+              type="info"
+              @click="emptyAddrs"
+              >{{ t('app.emptyAddrs') }}</n-button
+            >
           </div>
         </div>
       </n-form-item>
@@ -38,6 +66,22 @@ const props = defineProps({
   model: Object
 });
 
+const { t } = useI18n();
+let registerTypes = [
+  {
+    label: t('app.autoRegister'),
+    value: 'AUTO'
+  },
+  {
+    label: t('app.manualRegister'),
+    value: 'MANUAL'
+  }
+];
+
+let emptyAddrs = function () {
+  props.model.instanceAddrs = [];
+};
+
 // Computed properties
 const isReadonly = computed(
   () => props.model.mode === constant.FORM_MODE_DETAIL
@@ -45,6 +89,7 @@ const isReadonly = computed(
 const isKeyReadonly = computed(
   () => props.model.mode !== constant.FORM_MODE_CREATE
 );
+const isAutoRegister = computed(() => props.model.registerType === 'AUTO');
 
 // Rules for form validation
 const rules = reactive({
@@ -61,7 +106,6 @@ const rules = reactive({
     }
   ]
 });
-const { t } = useI18n();
 </script>
 
 <style scoped>
@@ -72,16 +116,10 @@ const { t } = useI18n();
 }
 
 .addr-group {
-  list-style-type: none; /* 去掉默认的列表样式 */
-  padding: 0; /* 去掉默认的内边距 */
-  margin: 0; /* 去掉默认的外边距 */
-  display: block;
+  width: 100%;
 }
 
-.addr-item {
-  background-color: #f0f0f0; /* 灰色背景 */
-  margin: 5px 5px 5px 0; /* 每个li元素之间的间隔 */
-  padding: 5px; /* 内边距，使内容不贴边 */
-  border-radius: 4px; /* 可选：圆角 */
+.addr-btn {
+  margin-top: 10px;
 }
 </style>

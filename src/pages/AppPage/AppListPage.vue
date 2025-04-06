@@ -101,7 +101,8 @@ const defaultModel = {
   appName: '',
   label: '',
   instanceAddrs: [],
-  registerType: '',
+  instanceCount: 0,
+  registerType: 'AUTO',
   mode: constant.FORM_MODE_CREATE
 };
 
@@ -231,11 +232,17 @@ const submitForm = function () {
     useForm.value = false;
     return;
   }
+  let instanceAddrs = null;
+  if (modelRef.value.registerType === 'MANUAL') {
+    instanceAddrs = modelRef.value.instanceAddrs;
+  }
   let param = {
     namespace:
       modelRef.value.namespace || namespaceStore.current.value.namespaceId,
     appName: modelRef.value.appName,
-    label: modelRef.value.label
+    label: modelRef.value.label,
+    registerType: modelRef.value.registerType,
+    instanceAddrs: instanceAddrs
   };
   appApi
     .updateApp(param)

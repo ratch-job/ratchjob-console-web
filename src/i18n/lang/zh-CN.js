@@ -20,6 +20,7 @@ const message = {
     operation: '操作',
     clone: '克隆',
     trigger: '触发',
+    empty: '清空',
     updatedtime: '更新时间',
     recover: '恢复',
     request_fail: '请求失败',
@@ -123,7 +124,13 @@ const message = {
     label: '应用标签',
     inputName: '输入应用名称',
     searchName: '查询应用名称(支持模糊查询)',
+    emptyAddrs: '清空地址',
+    instanceAddr: '实例地址',
     instanceAddrs: '实例地址列表',
+    instanceCount: '实例数量',
+    registerType: '注册类型',
+    autoRegister: '自动注册',
+    manualRegister: '手动录入',
     confirm_delete_action: '确认要删应用名为<%:=appName%>的应用吗？'
   },
   job: {

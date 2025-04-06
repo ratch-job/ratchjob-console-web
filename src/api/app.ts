@@ -9,6 +9,7 @@ export interface IAppInfo {
   namespace: string;
   registerType: string;
   instanceAddrs?: string[];
+  instanceCount: Number;
 }
 
 export interface IAppPageParam {
