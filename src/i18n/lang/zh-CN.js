@@ -56,6 +56,19 @@ const message = {
     developer: '开发者',
     guest: '访客'
   },
+  login: {
+    password: '密码',
+    captcha: '验证码',
+    login: '登录',
+    need_username: '需要输入用户名',
+    need_password: '需要输入密码',
+    need_captcha: '需要输入验证码',
+    get_captcha_fail: '获取验证码失败',
+    USER_CHECK_ERROR: '登录失败，用户名或密码错误!',
+    CAPTCHA_CHECK_ERROR: '验证码校验不通过!',
+    LOGIN_LIMITE_ERROR: '登录校验太频繁，稍后再试!',
+    LOGIN_UNKNOWN_ERROR: '登录失败，未知错误'
+  },
   menu: {
     index: '首页',
     app_management: '执行器管理',

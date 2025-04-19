@@ -55,6 +55,19 @@ const message = {
     developer: 'Developer',
     guest: 'Guest'
   },
+  login: {
+    password: 'Password',
+    captcha: 'captcha',
+    login: 'Login',
+    need_username: 'Need Username',
+    need_password: 'Need Password',
+    need_captcha: 'Need captcha',
+    get_captcha_fail: 'Get captcha fail',
+    USER_CHECK_ERROR: 'User or Password Error',
+    CAPTCHA_CHECK_ERROR: 'captcha error',
+    LOGIN_LIMITE_ERROR: 'login error too more times',
+    LOGIN_UNKNOWN_ERROR: 'login fail unknown error'
+  },
   menu: {
     index: 'Index',
     app_management: 'ExecutorManagement',

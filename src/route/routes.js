@@ -11,6 +11,7 @@ import JobTaskLatestHistoryPage from '@/pages/JobPage/JobTaskLatestHistoryPage.v
 import { AppsSharp, List, HomeSharp } from '@vicons/ionicons5';
 import { getMessage as t } from '@/i18n';
 import ClusterPage from '@/pages/ClusterPage/ClusterPage.vue';
+import Login from '@/pages/Login.vue';
 
 export const routes = [
   {
@@ -28,6 +29,12 @@ export const routes = [
     name: 'no permission',
     meta: { title: 'no permission' },
     component: NoPermission
+  },
+  {
+    path: '/p/login',
+    name: 'login',
+    meta: { title: 'login' },
+    component: Login
   },
   {
     path: '/manage',
