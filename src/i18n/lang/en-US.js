@@ -50,6 +50,11 @@ const message = {
     roles: 'Roles',
     enable: 'Enable'
   },
+  role: {
+    admin: 'Admin',
+    developer: 'Developer',
+    guest: 'Guest'
+  },
   menu: {
     index: 'Index',
     app_management: 'ExecutorManagement',
@@ -121,6 +126,7 @@ const message = {
     DIRECT_NODE: 'DIRECT NODE'
   },
   app: {
+    app: 'App',
     name: 'app name',
     label: 'app label',
     inputName: 'input app name',

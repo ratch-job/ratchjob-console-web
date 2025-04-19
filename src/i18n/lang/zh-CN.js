@@ -51,6 +51,11 @@ const message = {
     enable: '是否启用',
     confirm_delete_user_action: '确认要删服务名称为:<%:=username%> 的用户吗？'
   },
+  role: {
+    admin: '管理员',
+    developer: '开发者',
+    guest: '访客'
+  },
   menu: {
     index: '首页',
     app_management: '执行器管理',
@@ -120,6 +125,7 @@ const message = {
     DIRECT_NODE: '直连节点'
   },
   app: {
+    app: '应用',
     name: '应用名称',
     label: '应用标签',
     inputName: '输入应用名称',

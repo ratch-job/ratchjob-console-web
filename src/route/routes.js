@@ -1,5 +1,7 @@
 import MainLayout from '@/components/layout/MainLayout.vue';
 import NotFound from '@/pages/NotFound.vue';
+import NoPermission from '@/pages/NoPermission.vue';
+import UserListPage from '@/pages/User/UserListPage.vue';
 import About from '@/pages/About.vue';
 import Index from '@/pages/IndexPage/Index.vue';
 import AppListPage from '@/pages/AppPage/AppListPage.vue';
@@ -20,6 +22,12 @@ export const routes = [
     name: 'not found',
     meta: { title: '404' },
     component: NotFound
+  },
+  {
+    path: '/nopermission',
+    name: 'no permission',
+    meta: { title: 'no permission' },
+    component: NoPermission
   },
   {
     path: '/manage',
@@ -68,6 +76,12 @@ export const routes = [
         name: 'cluster',
         meta: { title: t('menu.cluster_info') },
         component: ClusterPage
+      },
+      {
+        path: '/manage/user',
+        name: 'user',
+        meta: { title: t('menu.user_management') },
+        component: UserListPage
       },
       {
         path: '/manage/appmonitor',
@@ -124,6 +138,10 @@ export const sideAllMenu = [
     name: t('menu.system_management'),
     icon: markRaw(AppsSharp),
     children: [
+      {
+        name: t('menu.user_management'),
+        path: '/manage/user'
+      },
       {
         name: t('menu.cluster_info'),
         path: '/manage/cluster'
