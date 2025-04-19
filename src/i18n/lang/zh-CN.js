@@ -69,6 +69,25 @@ const message = {
     LOGIN_LIMITE_ERROR: '登录校验太频繁，稍后再试!',
     LOGIN_UNKNOWN_ERROR: '登录失败，未知错误'
   },
+  passwordpanel: {
+    input_old_password: '输入旧密码',
+    input_new_password: '输入新密码',
+    old_password: '旧密码',
+    new_password: '新密码',
+    new_password_confirm: '新密码确认',
+    input_new_password_confirm: '输入新密码确认',
+    need_input_new_password: '需要输入新密码',
+    need_input_old_password: '需要输入旧密码',
+    you_will_need_to_enter_a_new_password_for_a_second_confirmation:
+      '需要输入新密码二次确认',
+    confirm_that_the_content_does_not_match_the_new_password:
+      '确认内容与新密码不一致',
+    reset_password: '修改密码',
+    logout: '退出登录',
+    logout_success: '退出登录成功',
+    reset_password_success: '修改密码成功！',
+    the_input_cannot_be_empty: '输入内容不能为空'
+  },
   menu: {
     index: '首页',
     app_management: '执行器管理',
@@ -78,6 +97,7 @@ const message = {
     job_task_list: '任务实例列表',
     task_latest_list: '最近任务执行记录',
     system_management: '系统管理',
+    user_management: '用户管理',
     system_monitor: '系统监控',
     cluster_info: '集群信息',
     about: '关于'

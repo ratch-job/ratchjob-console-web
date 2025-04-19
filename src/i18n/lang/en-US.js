@@ -50,6 +50,25 @@ const message = {
     roles: 'Roles',
     enable: 'Enable'
   },
+  passwordpanel: {
+    input_old_password: 'Input Old Password',
+    input_new_password: 'Input New Password',
+    old_password: 'Old Password',
+    new_password: 'New Password',
+    new_password_confirm: 'New Password Confirm',
+    input_new_password_confirm: 'Input New Password And Confirm',
+    need_input_new_password: 'You need Input New Password',
+    need_input_old_password: 'You need Input Old Password',
+    you_will_need_to_enter_a_new_password_for_a_second_confirmation:
+      'You will need to enter a new password for a second confirmation',
+    confirm_that_the_content_does_not_match_the_new_password:
+      'Confirm that the content does not match the new password',
+    reset_password: 'Modify Password',
+    logout: 'Logout',
+    logout_success: 'Logout Success',
+    reset_password_success: 'Modify Password Success！',
+    the_input_cannot_be_empty: 'The input cannot be empty'
+  },
   role: {
     admin: 'Admin',
     developer: 'Developer',
@@ -77,6 +96,7 @@ const message = {
     job_task_list: 'JobTaskList',
     task_latest_list: 'LatestTaskList',
     system_management: 'System',
+    user_management: 'User list',
     system_monitor: 'Monitor',
     cluster_info: 'Cluster Info',
     about: 'About'
