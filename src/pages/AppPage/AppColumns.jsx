@@ -50,28 +50,33 @@ export const createColumns = function ({
       render(row) {
         let editButton;
         let removePopconfirm;
-        editButton = (
-          <NButton
-            size="tiny"
-            quaternary
-            type="info"
-            onClick={() => showUpdate(row)}
-          >
-            {t('common.edit')}
-          </NButton>
-        );
-        removePopconfirm = (
-          <NPopconfirm
-            onPositiveClick={() => remove(row)}
-            v-slots={removeConfirmSlots}
-          >
-            <span>
-              {template(t('app.confirm_delete_action'), {
-                appName: row.appName
-              })}
-            </span>
-          </NPopconfirm>
-        );
+        if (webResources.canUpdateApp) {
+          editButton = (
+            <NButton
+              size="tiny"
+              quaternary
+              type="info"
+              onClick={() => showUpdate(row)}
+            >
+              {t('common.edit')}
+            </NButton>
+          );
+          removePopconfirm = (
+            <NPopconfirm
+              onPositiveClick={() => remove(row)}
+              v-slots={removeConfirmSlots}
+            >
+              <span>
+                {template(t('app.confirm_delete_action'), {
+                  appName: row.appName
+                })}
+              </span>
+            </NPopconfirm>
+          );
+        } else {
+          editButton = <span></span>;
+          removePopconfirm = editButton;
+        }
         return (
           <div>
             <NButton

@@ -85,62 +85,69 @@ export const createColumns = function ({
         let cloneButton;
         let triggerPopconfirm;
         let triggerButton;
-        editButton = (
-          <NButton
-            size="tiny"
-            quaternary
-            type="info"
-            onClick={() => showUpdate(row)}
-          >
-            {t('common.edit')}
-          </NButton>
-        );
-        cloneButton = (
-          <NButton
-            size="tiny"
-            quaternary
-            type="info"
-            onClick={() => showClone(row)}
-          >
-            {t('common.clone')}
-          </NButton>
-        );
-        /*
-        triggerPopconfirm = (
-          <NPopconfirm
-            onPositiveClick={() => trigger(row)}
-            v-slots={triggerConfirmSlots}
-          >
-            <span>
-              {template(t('job.confirm_trigger_action'), {
-                id: row.id
-              })}
-            </span>
-          </NPopconfirm>
-        );
-         */
-        triggerButton = (
-          <NButton
-            size="tiny"
-            quaternary
-            type="error"
-            onClick={() => showTrigger(row)}
-          >
-            {t('common.trigger')}
-          </NButton>
-        );
-        removePopconfirm = (
-          <NPopconfirm
-            onPositiveClick={() => remove(row)}
-            v-slots={removeConfirmSlots}
-          >
-            <span>
-              {template(t('job.confirm_delete_action'), {
-                id: row.id
-              })}
-            </span>
-          </NPopconfirm>
-        );
+        if (webResources.canUpdateJob) {
+          editButton = (
+            <NButton
+              size="tiny"
+              quaternary
+              type="info"
+              onClick={() => showUpdate(row)}
+            >
+              {t('common.edit')}
+            </NButton>
+          );
+          cloneButton = (
+            <NButton
+              size="tiny"
+              quaternary
+              type="info"
+              onClick={() => showClone(row)}
+            >
+              {t('common.clone')}
+            </NButton>
+          );
+          /*
+          triggerPopconfirm = (
+            <NPopconfirm
+              onPositiveClick={() => trigger(row)}
+              v-slots={triggerConfirmSlots}
+            >
+              <span>
+                {template(t('job.confirm_trigger_action'), {
+                  id: row.id
+                })}
+              </span>
+            </NPopconfirm>
+          );
+           */
+          triggerButton = (
+            <NButton
+              size="tiny"
+              quaternary
+              type="error"
+              onClick={() => showTrigger(row)}
+            >
+              {t('common.trigger')}
+            </NButton>
+          );
+          removePopconfirm = (
+            <NPopconfirm
+              onPositiveClick={() => remove(row)}
+              v-slots={removeConfirmSlots}
+            >
+              <span>
+                {template(t('job.confirm_delete_action'), {
+                  id: row.id
+                })}
+              </span>
+            </NPopconfirm>
+          );
+        } else {
+          editButton = <span></span>;
+          removePopconfirm = editButton;
+          triggerButton = editButton;
+          triggerPopconfirm = editButton;
+        }
         return (
           <div>
             <NButton

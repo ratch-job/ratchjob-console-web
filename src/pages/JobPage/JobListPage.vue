@@ -60,7 +60,7 @@
                 t('common.query')
               }}</n-button>
             </span>
-            <span class="query-button-item">
+            <span v-if="webResources.canUpdateApp" class="query-button-item">
               <n-button type="info" @click="showCreate">{{
                 t('common.add')
               }}</n-button>

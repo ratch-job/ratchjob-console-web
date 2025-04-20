@@ -33,6 +33,9 @@ export const useWebResources = defineStore('webResources', {
     username: '',
     version: 'x',
     canUpdateNamespace: true,
+    canUpdateApp: true,
+    canUpdateJob: true,
+    canUpdateUser: true,
     sideMenu: sideMenu(new Set(), true)
   }),
   getters: {},
@@ -43,6 +46,9 @@ export const useWebResources = defineStore('webResources', {
       this.isOldConsole = webResource.from === 'OLD_CONSOLE';
       this.fromRequest = true;
       this.canUpdateNamespace = this.resource.has('NAMESPACE_UPDATE');
+      this.canUpdateApp = this.resource.has('APP_UPDATE');
+      this.canUpdateJob = this.resource.has('JOB_UPDATE');
+      this.canUpdateUser = this.resource.has('USER_UPDATE');
       this.version = 'v' + webResource.version;
       this.username = webResource.username || '';
       this.sideMenu = sideMenu(resource, this.isOldConsole);
@@ -53,6 +59,9 @@ export const useWebResources = defineStore('webResources', {
       this.isOldConsole = true;
       this.fromRequest = false;
       this.canUpdateNamespace = true;
+      this.canUpdateApp = true;
+      this.canUpdateJob = true;
+      this.canUpdateUser = true;
       this.username = '';
       this.version = 'x';
     }
