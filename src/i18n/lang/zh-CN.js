@@ -246,6 +246,7 @@ const message = {
   },
   error: {
     NO_PERMISSION: '没有权限',
+    NO_APP_PERMISSION: '没有应用权限',
     NO_NAMESPACE_PERMISSION: '没有命名空间权限',
     SYSTEM_ERROR: '系统异常'
   }

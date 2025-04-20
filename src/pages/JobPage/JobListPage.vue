@@ -255,7 +255,7 @@ const showUpdate = function (row) {
 
 const showClone = function (row) {
   let description = row.description || '';
-  description += '_' + t('common.clone');
+  description += '_clone';
   modelRef.value = {
     mode: constant.FORM_MODE_CREATE,
     ...row,

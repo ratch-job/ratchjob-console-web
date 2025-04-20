@@ -5,13 +5,20 @@
         <n-space vertical class="inner_wrap">
           <n-card :title="this.$t('about.intro_title')" size="medium">
             <p>
-              ratch-job是一个rust实现的分布式任务调度平台服务，计划完全兼容xxl-job协议。
+              ratch-job是一个rust实现的分布式任务调度平台服务，它完全兼容xxl-job协议。
             </p>
             <p>
               <a href="https://github.com/ratch-job/ratch-job" target="_blank"
                 >ratch-job github</a
               >
             </p>
+          </n-card>
+          <n-card
+            v-if="webResources.username !== ''"
+            :title="this.$t('about.user_title')"
+            size="medium"
+          >
+            用户名: {{ webResources.username }}
           </n-card>
         </n-space>
       </div>

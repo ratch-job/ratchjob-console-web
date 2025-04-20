@@ -123,6 +123,14 @@ export const createColumns = function (showDetail, showUpdate, remove) {
               size="tiny"
               quaternary
               type="info"
+              onClick={() => showDetail(row)}
+            >
+              {t('common.detail')}
+            </NButton>
+            <NButton
+              size="tiny"
+              quaternary
+              type="info"
               onClick={() => showUpdate(row)}
             >
               {t('common.edit')}

@@ -2,7 +2,7 @@
   <div class="wrap">
     <div class="header">
       <div class="title">
-        <span>{{ this.$t('user.list') }}</span>
+        <span>{{ t('user.list') }}</span>
       </div>
     </div>
     <div class="content-wrap">
@@ -10,15 +10,10 @@
         <div class="query-params">
           <n-form label-placement="left" label-width="auto">
             <div class="paramWrap">
-              <n-form-item
-                :label="this.$t('user.username')"
-                path="param.username"
-              >
+              <n-form-item :label="t('user.username')" path="param.username">
                 <n-input
                   v-model:value="param.username"
-                  :placeholder="
-                    this.$t('common.preInput') + this.$t('user.username')
-                  "
+                  :placeholder="t('common.preInput') + t('user.username')"
                   clearable
                   @keydown.enter.prevent
                   @keyup.enter="queryList"
@@ -29,12 +24,12 @@
           <div class="queryButton">
             <span class="query-button-item">
               <n-button tertiary @click="queryList">{{
-                this.$t('common.query')
+                t('common.query')
               }}</n-button>
             </span>
             <span class="query-button-item">
               <n-button type="info" @click="showCreate">{{
-                this.$t('common.add')
+                t('common.add')
               }}</n-button>
             </span>
           </div>
@@ -70,10 +65,10 @@
         <template #footer>
           <n-space align="baseline">
             <n-button text @click="closeForm">{{
-              this.$t('common.return')
+              t('common.return')
             }}</n-button>
             <n-button type="primary" @click="submitForm">{{
-              this.$t('common.confirm')
+              t('common.confirm')
             }}</n-button>
           </n-space>
         </template>

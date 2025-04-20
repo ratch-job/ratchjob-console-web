@@ -198,7 +198,8 @@ const showJobDetail = function (jobId) {
         ...row
       };
       useForm.value = true;
-    });
+    })
+    .catch(printApiError);
 };
 
 const columns = createJobTaskColumns({ showJobDetail });
