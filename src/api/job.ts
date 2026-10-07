@@ -79,6 +79,14 @@ export interface IJobTaskInfo {
   status: string; // Assuming TaskStatusType is a string for simplicity
   finishTime: number;
   callbackMessage: string;
+  executionTime: number;
+  retryCount: number;
+  tryLogs: IJobTaskTryLog[];
+}
+
+export interface IJobTaskTryLog {
+  executionTime: number;
+  addr: string;
 }
 
 export interface IJobTaskPageParam {
@@ -90,6 +98,25 @@ export interface IJobTaskPageParam {
   status?: string;
   pageNo: number;
   pageSize: number;
+}
+
+export interface IJobTaskLogParam {
+  jobId: number;
+  taskId: number;
+  fromLineNum: number;
+  attempt?: number;
+}
+
+export interface IJobTaskLogInfo {
+  taskId: number;
+  attempt: number;
+  attemptCount: number;
+  instanceAddr: string;
+  taskStatus: string;
+  fromLineNum: number;
+  toLineNum: number;
+  logContent: string;
+  isEnd: boolean;
 }
 
 class JobApi {
@@ -135,6 +162,18 @@ class JobApi {
     return axios.request({
       method: 'get',
       url: '/ratchjob/api/console/v1/job/task/latest-history',
+      params: {
+        ...param
+      }
+    });
+  }
+
+  getJobTaskLog(
+    param: IJobTaskLogParam
+  ): Promise<AxiosResponse<IApiResult<IJobTaskLogInfo>>> {
+    return axios.request({
+      method: 'get',
+      url: '/ratchjob/api/console/v1/job/task/log',
       params: {
         ...param
       }

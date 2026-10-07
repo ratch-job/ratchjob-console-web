@@ -257,10 +257,18 @@ const message = {
     statusFail: 'Failed',
     finishTime: 'FinishTime',
     retryCount: 'RetryCount',
-    callbackMessage: 'CallbackMessage'
+    callbackMessage: 'CallbackMessage',
+    executionLog: 'Execution Log',
+    attemptNumber: 'Attempt {number}',
+    autoRefreshLog: 'Auto Refresh',
+    reloadLog: 'Reload From Start',
+    logFinished: 'Log loading completed'
   },
   error: {
     INVALID_PARAMETER: 'Invalid parameter',
+    TASK_LOG_NOT_FOUND: 'Task execution record not found',
+    TASK_LOG_UNAVAILABLE: 'Task execution log is unavailable',
+    TASK_LOG_READ_ERROR: 'Failed to read executor log',
     NO_PERMISSION: 'NO_PERMISSION',
     NO_APP_PERMISSION: 'NO_APP_PERMISSION',
     NO_NAMESPACE_PERMISSION: 'NO_NAMESPACE_PERMISSION',

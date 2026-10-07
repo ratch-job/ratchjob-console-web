@@ -41,7 +41,7 @@
         <n-data-table
           remote
           ref="table"
-          :scroll-x="600"
+          :scroll-x="1820"
           :bordered="false"
           :columns="columns"
           :data="dataRef"
@@ -52,6 +52,7 @@
         />
       </div>
     </div>
+    <JobTaskLogDrawer ref="taskLogDrawerRef" />
   </div>
 </template>
 
@@ -63,11 +64,8 @@ import { createJobTaskColumns } from '@/pages/JobPage/JobColumns.jsx';
 import { namespaceStore } from '@/data/namespace';
 import { useRoute, useRouter } from 'vue-router';
 import { jobApi } from '@/api/job';
-import {
-  handleApiResult,
-  printApiSuccess,
-  printApiError
-} from '@/utils/request';
+import JobTaskLogDrawer from '@/pages/JobPage/JobTaskLogDrawer.vue';
+import { handleApiResult, printApiError } from '@/utils/request';
 
 const { t } = useI18n();
 
@@ -81,6 +79,8 @@ const param = ref({
 const loadingRef = ref(false);
 
 const dataRef = ref([]);
+
+const taskLogDrawerRef = ref(null);
 
 const pagination = reactive({
   page: 1,
@@ -140,7 +140,11 @@ const routerBack = function () {
   router.go(-1);
 };
 
-const columns = createJobTaskColumns({});
+const showTaskLog = function (task) {
+  taskLogDrawerRef.value?.open(task);
+};
+
+const columns = createJobTaskColumns({ showTaskLog });
 
 onMounted(() => {
   namespaceStore.initLoad();

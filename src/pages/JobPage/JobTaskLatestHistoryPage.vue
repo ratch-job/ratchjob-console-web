@@ -65,7 +65,7 @@
         <n-data-table
           remote
           ref="table"
-          :scroll-x="600"
+          :scroll-x="1820"
           :bordered="false"
           :columns="columns"
           :data="dataRef"
@@ -98,6 +98,7 @@
         </template>
       </n-drawer-content>
     </n-drawer>
+    <JobTaskLogDrawer ref="taskLogDrawerRef" />
   </div>
 </template>
 
@@ -111,6 +112,7 @@ import { jobApi } from '@/api/job';
 import { appApi } from '@/api/app';
 import { handleApiResult, printApiError } from '@/utils/request';
 import JobDetail from '@/pages/JobPage/JobDetail.vue';
+import JobTaskLogDrawer from '@/pages/JobPage/JobTaskLogDrawer.vue';
 import * as constant from '@/types/constant';
 
 const { t } = useI18n();
@@ -171,6 +173,8 @@ const useForm = ref(false);
 const loadingRef = ref(false);
 
 const dataRef = ref([]);
+
+const taskLogDrawerRef = ref(null);
 
 const pagination = reactive({
   page: 1,
@@ -285,7 +289,11 @@ const showJobDetail = function (jobId) {
     .catch(printApiError);
 };
 
-const columns = createJobTaskColumns({ showJobDetail });
+const showTaskLog = function (task) {
+  taskLogDrawerRef.value?.open(task);
+};
+
+const columns = createJobTaskColumns({ showJobDetail, showTaskLog });
 
 const initAppList = function () {
   appApi

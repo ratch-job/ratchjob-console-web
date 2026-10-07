@@ -251,10 +251,18 @@ const message = {
     statusFail: '失败',
     finishTime: '完成时间',
     retryCount: '已重试次数',
-    callbackMessage: '回调消息'
+    callbackMessage: '回调消息',
+    executionLog: '执行日志',
+    attemptNumber: '第 {number} 次执行',
+    autoRefreshLog: '自动刷新',
+    reloadLog: '从头加载',
+    logFinished: '日志读取完成'
   },
   error: {
     INVALID_PARAMETER: '参数错误',
+    TASK_LOG_NOT_FOUND: '任务执行记录不存在',
+    TASK_LOG_UNAVAILABLE: '当前任务执行日志不可用',
+    TASK_LOG_READ_ERROR: '读取执行器日志失败',
     NO_PERMISSION: '没有权限',
     NO_APP_PERMISSION: '没有应用权限',
     NO_NAMESPACE_PERMISSION: '没有命名空间权限',
