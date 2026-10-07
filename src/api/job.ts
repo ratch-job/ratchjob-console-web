@@ -91,6 +91,11 @@ export interface IJobTaskTryLog {
 
 export interface IJobTaskPageParam {
   jobId?: number;
+  namespace?: string;
+  appName?: string;
+  startTriggerTime?: number;
+  endTriggerTime?: number;
+  status?: string;
   pageNo: number;
   pageSize: number;
 }

@@ -24,12 +24,40 @@
                   :options="appList"
                 />
               </n-form-item>
+              <n-form-item
+                class="trigger-time-range"
+                :label="t('task.triggerTimeRange')"
+                path="param.triggerTimeRange"
+              >
+                <n-date-picker
+                  v-model:value="param.triggerTimeRange"
+                  type="datetimerange"
+                  clearable
+                />
+              </n-form-item>
+              <n-form-item
+                class="task-status"
+                :label="t('task.status')"
+                path="param.status"
+              >
+                <n-select
+                  v-model:value="param.status"
+                  :options="taskStatusOptions"
+                  :placeholder="t('common.all')"
+                  clearable
+                />
+              </n-form-item>
             </div>
           </n-form>
           <div class="queryButton">
             <span class="query-button-item">
               <n-button tertiary @click="queryList">{{
-                t('common.refresh')
+                t('common.query')
+              }}</n-button>
+            </span>
+            <span class="query-button-item">
+              <n-button tertiary @click="resetQuery">{{
+                t('common.reset')
               }}</n-button>
             </span>
           </div>
@@ -90,8 +118,25 @@ import * as constant from '@/types/constant';
 const { t } = useI18n();
 
 const param = ref({
-  appName: ''
+  appName: '',
+  triggerTimeRange: null,
+  status: null
 });
+
+const taskStatusOptions = computed(() => [
+  {
+    value: 'RUNNING',
+    label: t('task.statusRunning')
+  },
+  {
+    value: 'SUCCESS',
+    label: t('task.statusSuccess')
+  },
+  {
+    value: 'FAIL',
+    label: t('task.statusFail')
+  }
+]);
 
 const defaultApp = {
   value: '',
@@ -153,9 +198,17 @@ const rowKey = function (rowData) {
 };
 
 const queryPage = function (pageNo) {
+  const triggerTimeRange = param.value.triggerTimeRange;
   return jobApi.getJobTaskHistoryList({
     namespace: namespaceStore.current.value.namespaceId,
     appName: param.value.appName,
+    startTriggerTime: triggerTimeRange
+      ? Math.floor(triggerTimeRange[0] / 1000)
+      : undefined,
+    endTriggerTime: triggerTimeRange
+      ? Math.floor(triggerTimeRange[1] / 1000)
+      : undefined,
+    status: param.value.status || undefined,
     pageNo: pageNo,
     pageSize: pagination.pageSize
   });
@@ -184,6 +237,15 @@ const doHandlePageChange = function (currentPage) {
 
 const queryList = function () {
   doHandlePageChange(1);
+};
+
+const resetQuery = function () {
+  param.value = {
+    appName: '',
+    triggerTimeRange: null,
+    status: null
+  };
+  queryList();
 };
 
 const jobDetailTitle = computed(function () {
@@ -307,6 +369,14 @@ onMounted(() => {
 
 .app-name {
   width: 260px;
+}
+
+.trigger-time-range {
+  width: 500px;
+}
+
+.task-status {
+  width: 220px;
 }
 
 .namespace {
