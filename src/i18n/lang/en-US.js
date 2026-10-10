@@ -185,6 +185,48 @@ const message = {
     scheduleType: 'schedule type',
     scheduleParam: 'schedule param',
     cronValue: 'cron value',
+    cronEditor: 'Visual editor',
+    cronEditorTitle: 'Cron expression editor',
+    cronRecentPlan: 'Recent schedule',
+    cronField: {
+      second: 'Second',
+      minute: 'Minute',
+      hour: 'Hour',
+      day: 'Day',
+      month: 'Month',
+      week: 'Week',
+      every: 'Every {unit} (*)',
+      range: 'Range',
+      rangeFrom: 'from',
+      rangeTo: 'to',
+      step: 'Step',
+      stepFrom: 'Start at',
+      stepEvery: ', every',
+      list: 'Specific',
+      invalid: 'Invalid cron expression',
+      previewEmpty: 'No upcoming schedule preview',
+      fallbackHint:
+        'Current expression cannot be visualized; fell back to default',
+      weekHint:
+        'Values 0-6: 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat',
+      weekdays: {
+        0: 'Sun',
+        1: 'Mon',
+        2: 'Tue',
+        3: 'Wed',
+        4: 'Thu',
+        5: 'Fri',
+        6: 'Sat'
+      },
+      unit: {
+        second: 'second(s)',
+        minute: 'minute(s)',
+        hour: 'hour(s)',
+        day: 'day(s)',
+        month: 'month(s)',
+        week: 'day(s)'
+      }
+    },
     delaySecond:
       'relative delay seconds (relative to the last task completion time)',
     intervalSecond:

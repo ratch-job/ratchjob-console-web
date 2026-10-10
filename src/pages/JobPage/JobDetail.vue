@@ -62,7 +62,21 @@
                 v-model:value="model.cronValue"
                 @keydown.enter.prevent
               />
-              <n-button ghost @click="cronPlan">
+              <n-button
+                ghost
+                :disabled="isReadonly"
+                :title="t('job.cronEditor')"
+                @click="openCronEditor"
+              >
+                <template #icon>
+                  <n-icon><CalendarOutline /></n-icon>
+                </template>
+              </n-button>
+              <n-button
+                ghost
+                :title="t('job.cronRecentPlan')"
+                @click="cronPlan"
+              >
                 <template #icon>
                   <n-icon><Eye /></n-icon>
                 </template>
@@ -209,7 +223,7 @@
     <n-modal v-model:show="showCronPlan">
       <n-card
         style="width: 220px"
-        title="最近计划"
+        :title="t('job.cronRecentPlan')"
         :bordered="false"
         role="dialog"
         aria-modal="true"
@@ -222,6 +236,12 @@
         </ul>
       </n-card>
     </n-modal>
+    <CronEditorModal
+      v-model:show="showCronEditor"
+      :value="model.cronValue"
+      :disabled="isReadonly"
+      @confirm="onCronEditorConfirm"
+    />
   </div>
 </template>
 
@@ -231,7 +251,8 @@ import { useI18n } from 'vue-i18n';
 import * as constant from '@/types/constant';
 import { toDatetime } from '@/utils/date';
 import { CronExpressionParser } from 'cron-parser';
-import { Eye } from '@vicons/ionicons5';
+import { CalendarOutline, Eye } from '@vicons/ionicons5';
+import CronEditorModal from '@/components/cron/CronEditorModal.vue';
 import {
   ScheduleTypeOptions,
   JobRunModeOptions,
@@ -241,6 +262,7 @@ import {
 } from './SeleteType.js';
 
 const showCronPlan = ref(false);
+const showCronEditor = ref(false);
 const cronPlanItems = ref([]);
 
 // Props
@@ -283,6 +305,14 @@ const cronPlan = function () {
   let items = getNextCronExecutions(props.model.cronValue, 5);
   cronPlanItems.value = items;
   showCronPlan.value = true;
+};
+
+const openCronEditor = function () {
+  showCronEditor.value = true;
+};
+
+const onCronEditorConfirm = function (cronValue) {
+  props.model.cronValue = cronValue;
 };
 
 //console.log('JobDetail model', props.model);

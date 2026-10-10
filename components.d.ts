@@ -7,6 +7,8 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    CronEditorModal: typeof import('./src/components/cron/CronEditorModal.vue')['default']
+    CronFieldPanel: typeof import('./src/components/cron/CronFieldPanel.vue')['default']
     Foo: typeof import('./src/components/Foo.vue')['default']
     LangSwitch: typeof import('./src/components/LangSwitch.vue')['default']
     MainLayout: typeof import('./src/components/layout/MainLayout.vue')['default']
@@ -15,6 +17,8 @@ declare module 'vue' {
     NamespacePopSelect: typeof import('./src/components/namespace/NamespacePopSelect.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
     NCard: typeof import('naive-ui')['NCard']
+    NCheckbox: typeof import('naive-ui')['NCheckbox']
+    NCheckboxGroup: typeof import('naive-ui')['NCheckboxGroup']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
     NDataTable: typeof import('naive-ui')['NDataTable']
     NDatePicker: typeof import('naive-ui')['NDatePicker']
@@ -39,6 +43,8 @@ declare module 'vue' {
     NSelect: typeof import('naive-ui')['NSelect']
     NSpace: typeof import('naive-ui')['NSpace']
     NSwitch: typeof import('naive-ui')['NSwitch']
+    NTabPane: typeof import('naive-ui')['NTabPane']
+    NTabs: typeof import('naive-ui')['NTabs']
     NTag: typeof import('naive-ui')['NTag']
     ResetPassword: typeof import('./src/components/user/ResetPassword.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
