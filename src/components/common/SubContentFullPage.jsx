@@ -7,7 +7,7 @@ import { useLayoutSize } from '@/data/appdata';
 import { useI18n } from 'vue-i18n';
 export default defineComponent({
   name: 'SubContentFullPage',
-  props: ['title', 'closeName', 'submitName', 'usePopSubmit', 'submitPopTitle'],
+  props: ['title', 'closeName', 'submitName', 'usePopSubmit', 'submitPopTitle', 'submitDisabled'],
   emits: ['close', 'submit'],
   setup(props, content) {
     let layoutSize = useLayoutSize();
@@ -47,7 +47,11 @@ export default defineComponent({
         );
       } else {
         return (
-          <NButton type="primary" onClick={() => this.$emit('submit')}>
+          <NButton
+            type="primary"
+            disabled={!!this.$props['submitDisabled']}
+            onClick={() => this.$emit('submit')}
+          >
             {this.$props['submitName'] || t('common.confirm')}
           </NButton>
         );

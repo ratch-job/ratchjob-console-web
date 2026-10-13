@@ -93,27 +93,61 @@
     <SubContentFullPage
       v-show="useForm"
       :title="detailTitle"
+      :submitDisabled="submitDisabled"
       @close="closeForm"
       @submit="submitForm"
     >
-      <JobDetail :model="modelRef" :appList="appList" />
+      <JobDetail ref="jobDetailRef" :model="modelRef" :appList="appList" />
     </SubContentFullPage>
     <n-modal
       v-model:show="showTriggerModal"
       preset="dialog"
-      :title="t('common.confirm')"
+      :title="t('job.manualTrigger')"
       content=""
       :positive-text="t('common.confirm')"
       :negative-text="t('common.return')"
       @positive-click="submitTrigger"
       @negative-click="cancelTrigger"
     >
-      <div>
-        <div>{{ t('job.select_executor') }}</div>
-        <n-select
-          v-model:value="triggerValue.instanceAddr"
-          :options="triggerInstanceAddrs"
-        />
+      <div class="trigger-modal-content">
+        <div class="trigger-task-summary">
+          <div>
+            <strong>{{ t('job.id') }}:</strong> {{ triggerValue.jobId }}
+          </div>
+          <div>
+            <strong>{{ t('job.description') }}:</strong>
+            {{ triggerValue.description || triggerValue.handleName }}
+          </div>
+          <div>
+            <strong>{{ t('job.appName') }}:</strong> {{ triggerValue.appName }}
+            <span class="trigger-namespace">
+              ({{ t('namespace.namespace') }}: {{ triggerValue.namespace }})
+            </span>
+          </div>
+          <div>
+            <strong>{{ t('job.handleName') }}:</strong>
+            {{ triggerValue.handleName }}
+          </div>
+        </div>
+        <n-form-item :label="t('job.select_executor')">
+          <n-select
+            v-model:value="triggerValue.instanceAddr"
+            :options="triggerInstanceAddrs"
+          />
+        </n-form-item>
+        <n-form-item :label="t('job.manualTriggerParam')">
+          <div class="trigger-param-field">
+            <n-input
+              v-model:value="triggerValue.triggerParam"
+              type="textarea"
+              :autosize="{ minRows: 3, maxRows: 8 }"
+              :placeholder="t('job.triggerParam')"
+            />
+            <div class="trigger-param-hint">
+              {{ t('job.manualTriggerParamHint') }}
+            </div>
+          </div>
+        </n-form-item>
       </div>
     </n-modal>
   </div>
@@ -161,6 +195,7 @@ const defaultModel = {
   runMode: '',
   handleName: '',
   triggerParam: '',
+  glueSource: '',
   routerStrategy: '',
   pastDueStrategy: '',
   blockingStrategy: '',
@@ -179,8 +214,13 @@ const dataRef = ref([]);
 
 const triggerInstanceAddrs = ref([]);
 const triggerValue = ref({
-  id: 0,
-  instanceAddr: ''
+  jobId: 0,
+  description: '',
+  appName: '',
+  namespace: '',
+  handleName: '',
+  instanceAddr: '',
+  triggerParam: ''
 });
 const showTriggerModal = ref(false);
 
@@ -257,23 +297,57 @@ const showCreate = function () {
   useForm.value = true;
 };
 
+const isGlueRunMode = function (runMode) {
+  return String(runMode || '').startsWith('GLUE_');
+};
+
+// Legacy GLUE without glueSource still keeps the script in triggerParam.
+// Manual trigger must not send that value as executorParams.
+const resolveManualTriggerParam = function (row) {
+  if (isGlueRunMode(row.runMode) && !String(row.glueSource ?? '').trim()) {
+    return '';
+  }
+  return row.triggerParam ?? '';
+};
+
+// Old GLUE tasks stored script in triggerParam; migrate into glueSource in the form only.
+const applyGlueSourceMigration = function (model) {
+  if (!isGlueRunMode(model.runMode)) {
+    return model;
+  }
+  const glueSource = model.glueSource ?? '';
+  const triggerParam = model.triggerParam ?? '';
+  if (!String(glueSource).trim() && String(triggerParam).trim()) {
+    return {
+      ...model,
+      glueSource: triggerParam,
+      triggerParam: ''
+    };
+  }
+  return model;
+};
+
 const showUpdate = function (row) {
-  modelRef.value = {
+  modelRef.value = applyGlueSourceMigration({
     mode: constant.FORM_MODE_UPDATE,
-    ...row
-  };
+    ...row,
+    glueSource: row.glueSource ?? '',
+    triggerParam: row.triggerParam ?? ''
+  });
   useForm.value = true;
 };
 
 const showClone = function (row) {
   let description = row.description || '';
   description += '_clone';
-  modelRef.value = {
+  modelRef.value = applyGlueSourceMigration({
     mode: constant.FORM_MODE_CREATE,
     ...row,
     id: 0,
-    description: description
-  };
+    description: description,
+    glueSource: row.glueSource ?? '',
+    triggerParam: row.triggerParam ?? ''
+  });
   useForm.value = true;
 };
 
@@ -315,8 +389,13 @@ const showTrigger = function (row) {
     })
     .then((items) => {
       triggerValue.value = {
-        id: row.id,
-        instanceAddr: ''
+        jobId: row.id,
+        description: row.description || '',
+        appName: row.appName || '',
+        namespace: row.namespace || '',
+        handleName: row.handleName || '',
+        instanceAddr: '',
+        triggerParam: resolveManualTriggerParam(row)
       };
       triggerInstanceAddrs.value = items;
       showTriggerModal.value = true;
@@ -327,8 +406,9 @@ const showTrigger = function (row) {
 const submitTrigger = function () {
   jobApi
     .triggerJob({
-      jobId: triggerValue.value.id,
-      instanceAddr: triggerValue.value.instanceAddr
+      jobId: triggerValue.value.jobId,
+      instanceAddr: triggerValue.value.instanceAddr,
+      triggerParam: triggerValue.value.triggerParam ?? ''
     })
     .then(handleApiResult)
     .then(() => {
@@ -345,7 +425,8 @@ const cancelTrigger = function () {
 const trigger = function (row) {
   jobApi
     .triggerJob({
-      jobId: row.id
+      jobId: row.id,
+      triggerParam: resolveManualTriggerParam(row)
     })
     .then(handleApiResult)
     .then(printApiSuccess)
@@ -353,12 +434,29 @@ const trigger = function (row) {
 };
 
 const showDetail = function (row) {
-  modelRef.value = {
+  modelRef.value = applyGlueSourceMigration({
     mode: constant.FORM_MODE_DETAIL,
-    ...row
-  };
+    ...row,
+    glueSource: row.glueSource ?? '',
+    triggerParam: row.triggerParam ?? ''
+  });
   useForm.value = true;
 };
+
+const jobDetailRef = ref(null);
+
+const submitDisabled = computed(function () {
+  if (modelRef.value.mode === constant.FORM_MODE_DETAIL) {
+    return false;
+  }
+  if (
+    isGlueRunMode(modelRef.value.runMode) &&
+    !String(modelRef.value.glueSource || '').trim()
+  ) {
+    return true;
+  }
+  return false;
+});
 
 const detailTitle = computed(function () {
   if (modelRef.value.mode === constant.FORM_MODE_UPDATE) {
@@ -378,40 +476,61 @@ const submitForm = function () {
     useForm.value = false;
     return;
   }
-  let param = {
-    id: modelRef.value.id,
-    namespace:
-      modelRef.value.namespace || namespaceStore.current.value.namespaceId,
-    enable: modelRef.value.enable,
-    appName: modelRef.value.appName,
-    key: modelRef.value.key,
-    description: modelRef.value.description,
-    scheduleType: modelRef.value.scheduleType,
-    cronValue: modelRef.value.cronValue,
-    delaySecond: modelRef.value.delaySecond,
-    intervalSecond: modelRef.value.intervalSecond,
-    runMode: modelRef.value.runMode,
-    handleName: modelRef.value.handleName,
-    triggerParam: modelRef.value.triggerParam,
-    routerStrategy: modelRef.value.routerStrategy,
-    pastDueStrategy: modelRef.value.pastDueStrategy,
-    blockingStrategy: modelRef.value.blockingStrategy,
-    timeoutSecond: modelRef.value.timeoutSecond,
-    tryTimes: modelRef.value.tryTimes,
-    retryInterval: modelRef.value.retryInterval
+
+  const doSubmit = function () {
+    if (
+      isGlueRunMode(modelRef.value.runMode) &&
+      !String(modelRef.value.glueSource || '').trim()
+    ) {
+      if (window.$message) {
+        window.$message.error(t('job.glueSourceRequired'));
+      }
+      return;
+    }
+
+    let param = {
+      id: modelRef.value.id,
+      namespace:
+        modelRef.value.namespace || namespaceStore.current.value.namespaceId,
+      enable: modelRef.value.enable,
+      appName: modelRef.value.appName,
+      key: modelRef.value.key,
+      description: modelRef.value.description,
+      scheduleType: modelRef.value.scheduleType,
+      cronValue: modelRef.value.cronValue,
+      delaySecond: modelRef.value.delaySecond,
+      intervalSecond: modelRef.value.intervalSecond,
+      runMode: modelRef.value.runMode,
+      handleName: modelRef.value.handleName,
+      triggerParam: modelRef.value.triggerParam ?? '',
+      glueSource: modelRef.value.glueSource ?? '',
+      routerStrategy: modelRef.value.routerStrategy,
+      pastDueStrategy: modelRef.value.pastDueStrategy,
+      blockingStrategy: modelRef.value.blockingStrategy,
+      timeoutSecond: modelRef.value.timeoutSecond,
+      tryTimes: modelRef.value.tryTimes,
+      retryInterval: modelRef.value.retryInterval
+    };
+    let api =
+      modelRef.value.mode === constant.FORM_MODE_CREATE
+        ? jobApi.createJob
+        : jobApi.updateJob;
+    api(param)
+      .then(handleApiResult)
+      .then(printApiSuccess)
+      .then(() => {
+        useForm.value = false;
+        queryList();
+      })
+      .catch(printApiError);
   };
-  let api =
-    modelRef.value.mode === constant.FORM_MODE_CREATE
-      ? jobApi.createJob
-      : jobApi.updateJob;
-  api(param)
-    .then(handleApiResult)
-    .then(printApiSuccess)
-    .then(() => {
-      useForm.value = false;
-      queryList();
-    })
-    .catch(printApiError);
+
+  const validatePromise = jobDetailRef.value?.validate?.();
+  if (validatePromise && typeof validatePromise.then === 'function') {
+    validatePromise.then(doSubmit).catch(() => {});
+  } else {
+    doSubmit();
+  }
 };
 
 const initAppList = function () {
@@ -527,5 +646,26 @@ onMounted(() => {
 
 .query-button-item {
   margin-left: 10px;
+}
+
+.trigger-task-summary {
+  margin-bottom: 16px;
+  line-height: 1.8;
+}
+
+.trigger-namespace {
+  margin-left: 8px;
+}
+
+.trigger-param-field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.trigger-param-hint {
+  color: #888;
+  font-size: 12px;
+  margin-top: 4px;
 }
 </style>

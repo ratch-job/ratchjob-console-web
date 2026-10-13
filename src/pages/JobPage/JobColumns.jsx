@@ -323,6 +323,14 @@ export const createJobTaskColumns = function ({ showJobDetail, showTaskLog }) {
       width: 100
     },
     {
+      title: t('job.triggerParam'),
+      key: 'triggerParam',
+      width: 180,
+      render(row) {
+        return renderMessageCell(row.triggerParam);
+      }
+    },
+    {
       title: t('task.triggerMessage'),
       key: 'triggerMessage',
       width: 220,
