@@ -18,6 +18,7 @@ export interface IJobInfoParam {
   runMode?: string;
   handleName?: string;
   triggerParam?: string;
+  glueSource?: string;
   routerStrategy?: string;
   pastDueStrategy?: string;
   blockingStrategy?: string;
@@ -28,7 +29,8 @@ export interface IJobInfoParam {
 
 export interface ITriggerJobParam {
   jobId: number;
-  instanceAddr: string;
+  instanceAddr?: string;
+  triggerParam?: string;
 }
 
 export interface IJobInfoParam {
@@ -49,6 +51,7 @@ export interface IJobInfo {
   runMode: string; // Assuming JobRunMode is a string for simplicity
   handleName: string;
   triggerParam: string;
+  glueSource?: string;
   routerStrategy: string; // Assuming RouterStrategy is a string for simplicity
   pastDueStrategy: string; // Assuming PastDueStrategy is a string for simplicity
   blockingStrategy: string; // Assuming ExecutorBlockStrategy is a string for simplicity
@@ -76,6 +79,7 @@ export interface IJobTaskInfo {
   triggerTime: number;
   instanceAddr: string;
   triggerMessage: string;
+  triggerParam?: string;
   status: string; // Assuming TaskStatusType is a string for simplicity
   finishTime: number;
   callbackMessage: string;

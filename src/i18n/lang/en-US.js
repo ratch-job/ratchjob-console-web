@@ -234,6 +234,8 @@ const message = {
     runMode: 'run mode',
     handleName: 'handle name',
     triggerParam: 'trigger param',
+    glueSource: 'GLUE script',
+    glueSourceRequired: 'GLUE script is required for GLUE run mode',
     routerStrategy: 'router strategy',
     pastDueStrategy: 'past due strategy',
     blockingStrategy: 'blocking strategy',
@@ -247,6 +249,10 @@ const message = {
     task_list: 'Task list',
     enableStatus: 'EnableStatus',
     select_executor: 'Select executor',
+    manualTrigger: 'Run once manually',
+    manualTriggerParam: 'Parameters for this execution',
+    manualTriggerParamHint:
+      'Leave blank to run this time with an empty parameter. The saved task parameter is not changed.',
     types: {
       scheduleType: {
         none: 'None',

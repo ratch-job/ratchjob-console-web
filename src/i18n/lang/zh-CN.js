@@ -228,6 +228,8 @@ const message = {
     runMode: '运行模式',
     handleName: '处理名称',
     triggerParam: '触发参数',
+    glueSource: 'GLUE脚本',
+    glueSourceRequired: 'GLUE运行模式必须填写GLUE脚本',
     routerStrategy: '路由策略',
     pastDueStrategy: '逾期策略',
     blockingStrategy: '阻塞策略',
@@ -239,6 +241,9 @@ const message = {
     task_list: '执行实例',
     enableStatus: '启动状态',
     select_executor: '选择执行机器',
+    manualTrigger: '手动执行一次',
+    manualTriggerParam: '本次触发参数',
+    manualTriggerParamHint: '留空表示本次参数为空，不会修改任务上保存的触发参数',
     types: {
       scheduleType: {
         none: '无',

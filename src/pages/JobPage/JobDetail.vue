@@ -144,6 +144,24 @@
           }"
         />
       </n-form-item>
+      <n-form-item
+        v-if="isGlue"
+        path="glueSource"
+        :label="t('job.glueSource')"
+        :required="true"
+      >
+        <n-input
+          :disabled="isReadonly"
+          :placeholder="t('job.glueSource')"
+          v-model:value="model.glueSource"
+          type="textarea"
+          :rows="8"
+          :autosize="{
+            minRows: 4,
+            maxRows: 16
+          }"
+        />
+      </n-form-item>
       <!--      <n-divider title-placement="left">高级配置</n-divider>-->
       <n-grid :cols="3" :x-gap="12">
         <n-gi>
@@ -325,9 +343,16 @@ const isKeyReadonly = computed(
   () => props.model.mode !== constant.FORM_MODE_CREATE
 );
 
+const isGlue = computed(() =>
+  String(props.model.runMode || '').startsWith('GLUE_')
+);
 const isCron = computed(() => props.model.scheduleType === 'CRON');
 const isInterval = computed(() => props.model.scheduleType === 'INTERVAL');
 const isDelay = computed(() => props.model.scheduleType === 'DELAY');
+
+const { t } = useI18n();
+
+const formRef = ref(null);
 
 // Rules for form validation
 const rules = reactive({
@@ -342,10 +367,29 @@ const rules = reactive({
       },
       trigger: ['input', 'blur']
     }
+  ],
+  glueSource: [
+    {
+      validator(rule, value) {
+        const runMode = String(props.model.runMode || '');
+        if (!runMode.startsWith('GLUE_')) {
+          return true;
+        }
+        if (!value || !String(value).trim()) {
+          return new Error(t('job.glueSourceRequired'));
+        }
+        return true;
+      },
+      trigger: ['input', 'blur', 'change']
+    }
   ]
 });
 
-const { t } = useI18n();
+defineExpose({
+  validate() {
+    return formRef.value?.validate?.();
+  }
+});
 </script>
 
 <style scoped>
