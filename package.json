@@ -17,7 +17,7 @@
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "lint": "eslint . --fix",
     "fmt": "prettier --write src/"
   },
   "dependencies": {
@@ -26,7 +26,7 @@
     "cron-parser": "^5.0.5",
     "crypto-js": "^4.2.0",
     "diff": "^5.1.0",
-    "echarts": "^5.5.1",
+    "echarts": "^6.1.0",
     "pinia": "^2.0.35",
     "qs": "^6.11.2",
     "template_js": "^3.1.4",
@@ -36,22 +36,21 @@
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
-    "@rushstack/eslint-patch": "1.5.1",
-    "@types/node": "^18.16.1",
+    "@types/node": "^24.19.2",
     "@vicons/ionicons5": "^0.12.0",
-    "@vitejs/plugin-vue": "^4.4.0",
-    "@vitejs/plugin-vue-jsx": "^3.0.1",
-    "@vue/eslint-config-prettier": "^8.0.0",
+    "@vitejs/plugin-vue": "^6.0.10",
+    "@vitejs/plugin-vue-jsx": "^5.1.6",
+    "@vue/eslint-config-prettier": "^10.0.0",
     "browserslist": "^4.22.1",
-    "eslint": "^8.54.0",
-    "eslint-plugin-vue": "9.18.1",
+    "eslint": "^9.0.0",
+    "eslint-plugin-vue": "^10.0.0",
     "lightningcss": "^1.22.0",
     "naive-ui": "^2.41.0",
     "prettier": "^3.1.0",
     "typescript": "^5.0.2",
     "unplugin-auto-import": "^0.16.6",
     "unplugin-vue-components": "^0.25.2",
-    "vite": "^4.4.11",
+    "vite": "^7.3.7",
     "vue-tsc": "^2.2.0"
   }
 }
