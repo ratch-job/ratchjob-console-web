@@ -69,6 +69,20 @@ class HttpRequest {
     this.interceptors(instance, options.url);
     return instance(options);
   }
+
+  //Download binary resources as blob, bypassing the default form-urlencoded header.
+  requestBlob(url: string, params: any): Promise<AxiosResponse> {
+    const instance = axios.create();
+    const options: AxiosRequestConfig = {
+      url,
+      method: 'get',
+      params,
+      responseType: 'blob',
+      timeout: 60000
+    };
+    this.interceptors(instance, url);
+    return instance(options);
+  }
 }
 
 const request = new HttpRequest();

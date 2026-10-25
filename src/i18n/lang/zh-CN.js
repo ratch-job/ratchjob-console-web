@@ -244,6 +244,10 @@ const message = {
     manualTrigger: '手动执行一次',
     manualTriggerParam: '本次触发参数',
     manualTriggerParamHint: '留空表示本次参数为空，不会修改任务上保存的触发参数',
+    exportJob: '导出',
+    importJob: '导入',
+    importResultSummary:
+      '导入完成：共 {total} 条，成功 {success} 条，失败 {fail} 条',
     types: {
       scheduleType: {
         none: '无',

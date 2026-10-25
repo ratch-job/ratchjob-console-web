@@ -253,6 +253,10 @@ const message = {
     manualTriggerParam: 'Parameters for this execution',
     manualTriggerParamHint:
       'Leave blank to run this time with an empty parameter. The saved task parameter is not changed.',
+    exportJob: 'Export',
+    importJob: 'Import',
+    importResultSummary:
+      'Import finished: total {total}, success {success}, failed {fail}',
     types: {
       scheduleType: {
         none: 'None',

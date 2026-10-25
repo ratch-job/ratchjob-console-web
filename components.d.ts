@@ -46,6 +46,7 @@ declare module 'vue' {
     NTabPane: typeof import('naive-ui')['NTabPane']
     NTabs: typeof import('naive-ui')['NTabs']
     NTag: typeof import('naive-ui')['NTag']
+    NUpload: typeof import('naive-ui')['NUpload']
     ResetPassword: typeof import('./src/components/user/ResetPassword.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

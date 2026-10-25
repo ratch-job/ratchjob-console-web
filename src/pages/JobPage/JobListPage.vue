@@ -74,6 +74,25 @@
                 t('common.add')
               }}</n-button>
             </span>
+            <span class="query-button-item">
+              <n-button tertiary :loading="exporting" @click="exportJobFile">{{
+                t('job.exportJob')
+              }}</n-button>
+            </span>
+            <span class="query-button-item">
+              <n-upload
+                v-if="webResources.canUpdateJob"
+                action="/ratchjob/api/console/v1/job/import"
+                :data="importUploadData"
+                :show-file-list="false"
+                accept=".zip"
+                @before-upload="doBeforeImport"
+                @finish="handlerImportFinish"
+                @error="handlerImportError"
+              >
+                <n-button type="info">{{ t('job.importJob') }}</n-button>
+              </n-upload>
+            </span>
           </div>
         </div>
         <n-data-table
@@ -286,6 +305,115 @@ const doHandlePageChange = function (currentPage) {
 };
 
 const queryList = function () {
+  doHandlePageChange(1);
+};
+
+const exporting = ref(false);
+
+const importUploadData = ref({
+  namespace: namespaceStore.current.value.namespaceId
+});
+
+const doBeforeImport = function () {
+  importUploadData.value = {
+    namespace: namespaceStore.current.value.namespaceId
+  };
+  return true;
+};
+
+const exportJobFile = function () {
+  if (exporting.value) {
+    return;
+  }
+  exporting.value = true;
+  jobApi
+    .exportJob({
+      namespace: namespaceStore.current.value.namespaceId,
+      appName: param.value.appName,
+      likeDescription: param.value.description,
+      likeHandleName: param.value.handleName,
+      likeKey: param.value.key
+    })
+    .then((resp) => {
+      saveExportBlob(resp.data);
+    })
+    .catch(printApiError)
+    .finally(() => {
+      exporting.value = false;
+    });
+};
+
+const saveExportBlob = function (data) {
+  if (data.type === 'application/json') {
+    data.text().then((text) => {
+      let message = t('error.SYSTEM_ERROR');
+      try {
+        const result = JSON.parse(text);
+        if (result.message) {
+          message = result.message;
+        }
+      } catch (e) {
+        message = t('error.SYSTEM_ERROR');
+      }
+      if (window.$message) {
+        window.$message.error(message);
+      }
+    });
+    return;
+  }
+  const url = URL.createObjectURL(data);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `ratchjob_job_export_${Date.now()}.zip`;
+  link.click();
+  URL.revokeObjectURL(url);
+};
+
+const showImportError = function (message) {
+  if (window.$message) {
+    window.$message.error(message);
+  }
+};
+
+const handlerImportError = function () {
+  showImportError(t('error.SYSTEM_ERROR'));
+};
+
+const handlerImportFinish = function ({ event }) {
+  const target = event && event.target;
+  if (!target || target.status !== 200) {
+    showImportError(t('error.SYSTEM_ERROR'));
+    return;
+  }
+  let result = null;
+  try {
+    result = JSON.parse(target.responseText);
+  } catch (e) {
+    result = null;
+  }
+  if (!result || !result.success) {
+    showImportError((result && result.message) || t('error.SYSTEM_ERROR'));
+    return;
+  }
+  const data = result.data || {};
+  const fail = data.failCount || 0;
+  const summary = t('job.importResultSummary', {
+    total: data.totalCount || 0,
+    success: data.successCount || 0,
+    fail: fail
+  });
+  const errors = data.errors || [];
+  if (window.$message) {
+    if (fail > 0) {
+      const detail = errors.length > 0 ? ` ${errors.join('；')}` : '';
+      window.$message.warning(summary + detail, {
+        duration: 8000,
+        closable: true
+      });
+    } else {
+      window.$message.success(summary);
+    }
+  }
   doHandlePageChange(1);
 };
 

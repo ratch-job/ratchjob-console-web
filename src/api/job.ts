@@ -73,6 +73,14 @@ export interface IJobPageParam {
   pageSize: number;
 }
 
+export interface IJobExportParam {
+  namespace: string;
+  appName?: string;
+  likeDescription?: string;
+  likeHandleName?: string;
+  likeKey?: string;
+}
+
 export interface IJobTaskInfo {
   taskId: number;
   jobId: number;
@@ -214,6 +222,10 @@ class JobApi {
       url: '/ratchjob/api/console/v1/job/trigger',
       data: param
     });
+  }
+
+  exportJob(param: IJobExportParam): Promise<AxiosResponse<Blob>> {
+    return axios.requestBlob('/ratchjob/api/console/v1/job/export', param);
   }
 }
 
